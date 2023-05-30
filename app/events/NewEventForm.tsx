@@ -1,17 +1,21 @@
-
 "use client";
-
 import React, { useContext } from "react";
 import { EventContext } from "../Context/EventProvider/EventContext";
 
+
+
 export default function NewEventForm() {
+
+  
+  
   const { newEvent, setNewEvent } = useContext(EventContext);
+  console.log(newEvent ? newEvent : "testing")
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputName = e.target.name;
 
-    setNewEvent((prevEvent: object) => ({
+    setNewEvent((prevEvent: Event) => ({
       ...prevEvent,
       [inputName]: inputValue,
     }));
@@ -33,7 +37,7 @@ export default function NewEventForm() {
       />
       <input
         name="eventDate"
-        value={newEvent.eventDate ? newEvent.eventDate : null}
+        value={newEvent.eventDate ? newEvent.eventDate : ""}
         type="date"
         placeholder="Event Date"
         onChange={handleInputChange}
@@ -41,4 +45,3 @@ export default function NewEventForm() {
     </form>
   );
 }
-

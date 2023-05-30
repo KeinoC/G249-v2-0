@@ -1,12 +1,11 @@
 "use client";
 
 import React, { createContext, useState, useEffect } from 'react';
-import { createEvent } from "../../../Firebase/endpoints/events"
 
 interface Event {
-  eventHost: string | undefined;
-  eventDate: Date | null;
-  bookingStatus: string | undefined;
+  eventHost: string;
+  eventDate: string;
+  bookingStatus: string;
 }
 
 interface EventContextProps {
@@ -16,16 +15,13 @@ interface EventContextProps {
   setNewEvent: React.Dispatch<React.SetStateAction<Event>>;
 }
 
-
-
-
 export const EventContext = createContext<EventContextProps | undefined>(undefined);
 
 export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [newEvent, setNewEvent] = useState<Event>({
-    eventHost: "",
-    eventDate: null,
-    bookingStatus: ""
+    eventHost: '',
+    eventDate: '',
+    bookingStatus: '',
   });
   const [allEvents, setAllEvents] = useState<Event[]>([]);
 
@@ -35,6 +31,7 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     </EventContext.Provider>
   );
 };
+
 
 
 
