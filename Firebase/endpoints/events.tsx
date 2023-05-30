@@ -1,16 +1,14 @@
 import { db } from "../firebase-config";
 
 
+interface Event {
+  id?: string;
+  eventHost: string;
+  eventDate: string;
+  bookingStatus: string;
+}
 
-interface EventData {
-    title: string;
-    description: string;
-    // ...
-  }
-
-
-
-export const createEvent = async (eventData: EventData): Promise<string> => {
+export const createEvent = async (eventData: Event): Promise<string> => {
   try {
     const docRef = await db.collection("events").add(eventData);
     console.log("Event created with ID:", docRef.id);
@@ -24,7 +22,7 @@ export const createEvent = async (eventData: EventData): Promise<string> => {
 
 export const updateEvent = async (
   eventId: string,
-  updatedData: Partial<EventData>
+  updatedData: Partial<Event>
 ): Promise<void> => {
   try {
     const eventRef = db.collection("events").doc(eventId);
@@ -36,11 +34,11 @@ export const updateEvent = async (
   }
 };
 
-export const getAllEvents = async (): Promise<EventData[]> => {
+export const getAllEvents = async (): Promise<Event[]> => {
   try {
     const snapshot = await db.collection("events").get();
-    const events: EventData[] = snapshot.docs.map(
-      (doc) => ({ ...doc.data() } as EventData)
+    const events: Event[] = snapshot.docs.map(
+      (doc) => ({ ...doc.data() } as Event)
     );
     return events;
   } catch (error) {
@@ -49,12 +47,12 @@ export const getAllEvents = async (): Promise<EventData[]> => {
   }
 };
 
-export const getEventById = async (eventId: string): Promise<EventData> => {
+export const getEventById = async (eventId: string): Promise<Event> => {
   try {
     const eventRef = db.collection("events").doc(eventId);
     const doc = await eventRef.get();
     if (doc.exists) {
-      return { ...doc.data() } as EventData;
+      return { ...doc.data() } as Event;
     } else {
       throw new Error("Event not found");
     }
@@ -75,10 +73,4 @@ export const deleteEvent = async (eventId: string): Promise<void> => {
   }
 };
 
-let randEvent: EventData= {
-    title: "Random Event Test",
-    description: "Random Event Test"
-}
-
-// createEvent(randEvent)
 

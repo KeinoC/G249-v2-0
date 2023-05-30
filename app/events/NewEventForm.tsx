@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { EventContext } from "../Context/EventProvider/EventContext";
 import { TextInput, Checkbox, Button, Group, Box, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { createEvent } from "../../Firebase/endpoints/events"
 
 
 
@@ -11,7 +12,7 @@ export default function NewEventForm() {
   
   
   const { newEvent, setNewEvent } = useContext(EventContext);
-  console.log(newEvent ? newEvent : "testing")
+  // console.log(newEvent ? newEvent : "testing")
 
 const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   const inputValue = e.target.value;
@@ -29,9 +30,27 @@ const handleSelectionChange = (value: "string") => {
   }))
 };
 
+const handleSubmitNewEvent = (e: React.FormEvent) => {
+  e.preventDefault(); // Prevent the default form submission behavior
+
+  // Check if all required fields are filled before submitting the form
+  if (newEvent.eventHost && newEvent.eventDate && newEvent.bookingStatus) {
+    createEvent(newEvent);
+    setNewEvent({
+      eventHost: '',
+      eventDate: '',
+      bookingStatus: '',
+    });
+  } else {
+    // Handle the case when required fields are not filled
+    console.log('Please fill in all required fields');
+  }
+};
+
+
   return (
     <Box maw={300} mx="auto">
-    <form>
+    <form onSubmit={handleSubmitNewEvent}>
 
       <Select
       onChange={handleSelectionChange}
@@ -59,10 +78,10 @@ const handleSelectionChange = (value: "string") => {
         placeholder="Event Date"
         onChange={handleInputChange}
       />
-    </form>
     <Group position="right" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
+    </form>
     </Box>
   );
 }
