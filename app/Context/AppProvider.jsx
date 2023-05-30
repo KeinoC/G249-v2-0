@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { EventProvider } from './EventContext';
+import { EventProvider } from './EventProvider/EventContext';
 
 export const AppProvider = ({ children }) => {
   return (
