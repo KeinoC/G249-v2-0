@@ -1,12 +1,14 @@
 import { db } from "../firebase-config";
 
+
+
 interface EventData {
-  // Define the structure of the event data
-  // Modify the properties according to your specific event data structure
-  title: string;
-  description: string;
-  // ...
-}
+    title: string;
+    description: string;
+    // ...
+  }
+
+
 
 export const createEvent = async (eventData: EventData): Promise<string> => {
   try {
@@ -38,7 +40,7 @@ export const getAllEvents = async (): Promise<EventData[]> => {
   try {
     const snapshot = await db.collection("events").get();
     const events: EventData[] = snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as EventData)
+      (doc) => ({ ...doc.data() } as EventData)
     );
     return events;
   } catch (error) {
@@ -52,7 +54,7 @@ export const getEventById = async (eventId: string): Promise<EventData> => {
     const eventRef = db.collection("events").doc(eventId);
     const doc = await eventRef.get();
     if (doc.exists) {
-      return { id: doc.id, ...doc.data() } as EventData;
+      return { ...doc.data() } as EventData;
     } else {
       throw new Error("Event not found");
     }
@@ -72,3 +74,11 @@ export const deleteEvent = async (eventId: string): Promise<void> => {
     throw error;
   }
 };
+
+let randEvent: EventData= {
+    title: "Random Event Test",
+    description: "Random Event Test"
+}
+
+// createEvent(randEvent)
+
