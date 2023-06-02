@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext } from "react";
-import { EventContext } from "../Context/EventProvider/EventContext";
+import { EventContext, GEvent } from "../Context/EventProvider/EventContext";
 import { TextInput, Checkbox, Button, Group, Box, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { createEvent } from "../../Firebase/endpoints/events"
@@ -9,26 +9,30 @@ import { createEvent } from "../../Firebase/endpoints/events"
 
 export default function NewEventForm() {
 
-  
-  
-  const { newEvent, setNewEvent } = useContext(EventContext);
+  // const { newEvent, setNewEvent } = useContext(EventContext);
+  const NewEventListing = useContext(EventContext)
+  const {newEvent, setNewEvent} = NewEventListing || {}
+
   // console.log(newEvent ? newEvent : "testing")
 
-const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
   const inputValue = e.target.value;
   const inputName = e.target.name;
 
-  setNewEvent((prevEvent: Event) => ({
+  setNewEvent((prevEvent: GEvent) => ({
     ...prevEvent,
     [inputName]: inputValue,
   }));
 };
 
 const handleSelectionChange = (value: "string") => {
-  setNewEvent((prevEvent: Event) => ({
+  setNewEvent((prevEvent: GEvent) => ({
     ...prevEvent, ["bookingStatus"] : value
   }))
 };
+
+/// error: 'newEvent' is possibly 'undefined'. --- trying to fix case where Event is possibly undefined.
+
 
 const handleSubmitNewEvent = (e: React.FormEvent) => {
   e.preventDefault(); // Prevent the default form submission behavior

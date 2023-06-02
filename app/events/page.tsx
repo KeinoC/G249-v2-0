@@ -5,16 +5,11 @@ import {EventContext} from "../Context/EventProvider/EventContext"
 
 
 export default function Events() {
-    
-    // const contextData = useContext(MyContext);/
-    
-    // Use the context data in your component
-    // const { foo, bar } = contextData || {};
-    //////////////
-    
-    // const {allEvents} = useContext(EventContext)
-    const EventContext = useContext(EventContext)
-    const {allEvents} = EventContext || {};
+
+
+    // Imports States along with types from state manager (AppProvider)
+    const EventListing = useContext(EventContext)
+    const {allEvents} = EventListing || {};
 
     console.log(allEvents)
 
