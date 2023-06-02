@@ -3,16 +3,16 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getAllEvents, getEventById, deleteEvent, updateEvent } from '@/Firebase/endpoints/events';
 
-interface Event {
+export interface Event {
   id?: string;
   eventHost: string;
   eventDate: string;
   bookingStatus: string;
 }
 
-interface EventContextProps {
-  allEvents: Event[];
-  setAllEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+export interface EventContextProps {
+  allEvents: Event[] | string;
+  setAllEvents: React.Dispatch<React.SetStateAction<Event[] | string>>;
   newEvent: Event;
   setNewEvent: React.Dispatch<React.SetStateAction<Event>>;
 }
@@ -20,6 +20,8 @@ interface EventContextProps {
 export const EventContext = createContext<EventContextProps | undefined>(undefined);
 
 export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [allEvents, setAllEvents] = useState<Event[] | string>([]);
+  // useState<Event | undefined>(undefined);
 
   useEffect(() => {
     const fetchAllEvents = async (): Promise<void> => {
@@ -40,7 +42,6 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     eventDate: '',
     bookingStatus: '',
   });
-  const [allEvents, setAllEvents] = useState<Event[]>([]);
 
   return (
     <EventContext.Provider value={{ allEvents, setAllEvents, newEvent, setNewEvent }}>
