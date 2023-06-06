@@ -1,17 +1,20 @@
 "use client";
 import React, { useContext, useState } from "react";
 import "./NavBar.css";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function NavBar() {
     return (
         <div className="navbar">
             <li className="nav-item">
-              <Link href="/">GARDEN249</Link>
-              </li>
+                <Link href="/">GARDEN249</Link>
+            </li>
             <li className="nav-item">
-              <Link href="/events">Events</Link>
-              </li>
+                <Link href="/dashboard">Dashboard</Link>
+            </li>
+            <li className="nav-item">
+                <Link href="/events">Events</Link>
+            </li>
             <li className="nav-item">Login</li>
         </div>
     );

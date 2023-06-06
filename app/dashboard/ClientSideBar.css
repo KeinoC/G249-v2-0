@@ -1,0 +1,9 @@
+
+
+
+@media screen and (min-width: 300px) and (max-width: 950px) {
+
+.navbar {
+    display: none;
+}
+}
