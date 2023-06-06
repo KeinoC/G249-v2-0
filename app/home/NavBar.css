@@ -2,11 +2,12 @@
     position:relative !important;
     display: flex;
     flex-direction: row;
-    background-color: whitesmoke;
+    background-color: rgb(37, 36, 36);
     z-index: 1;
     height: 5vh;
     width: 100vw;
     justify-content: space-between;
+    color: whitesmoke;
     
 }
 
