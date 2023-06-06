@@ -9,7 +9,9 @@
   --borderRadius1: 0.5rem;
   --boxShadowInset3: -26px -26px 20px rgba(0, 0, 0, 0.53) inset;
   --boxShadowInset2: -10px -10px 20px rgba(0, 0, 0, 0.53) inset;
-  --boxShadowInset1: -5px -5px 15px rgba(0, 0, 0, 0.53) inset;
+  --boxShadowInset1: -5px -5px 10px rgba(0, 0, 0, 0.53) inset;
+  --bgLightMode1: rgb(216, 252, 246);
+  --bgLightMode2: rgb(183, 254, 243);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,12 +22,7 @@
   }
 }
 
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--bgLightMode1);
 }
