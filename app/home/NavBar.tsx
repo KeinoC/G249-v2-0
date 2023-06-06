@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useState } from "react";
-import "./Navbar.css";
+import "./NavBar.css";
 import Link from 'next/link';
 
 export default function NavBar() {
