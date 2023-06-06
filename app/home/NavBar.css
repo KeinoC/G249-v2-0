@@ -1,5 +1,5 @@
 .navbar {
-    position:absolute;
+    position:relative !important;
     display: flex;
     flex-direction: row;
     background-color: whitesmoke;

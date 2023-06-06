@@ -2,7 +2,7 @@
 import React, {useContext, useState} from 'react';
 import NewEventForm from "./NewEventForm"
 import {EventContext} from "../Context/EventProvider/EventContext"
-
+import NavBar from '../home/NavBar';
 
 export default function Events() {
 
@@ -14,8 +14,8 @@ export default function Events() {
     console.log(allEvents)
 
     return (
-        <div>Hello from Events
-
+        <div>
+<NavBar />
         <NewEventForm />
         </div>
     )
