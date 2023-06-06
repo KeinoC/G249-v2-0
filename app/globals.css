@@ -6,6 +6,10 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --borderRadius1: 0.5rem;
+  --boxShadowInset3: -26px -26px 20px rgba(0, 0, 0, 0.53) inset;
+  --boxShadowInset2: -10px -10px 20px rgba(0, 0, 0, 0.53) inset;
+  --boxShadowInset1: -5px -5px 15px rgba(0, 0, 0, 0.53) inset;
 }
 
 @media (prefers-color-scheme: dark) {

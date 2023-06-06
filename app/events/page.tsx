@@ -14,9 +14,9 @@ export default function Events() {
     console.log(allEvents)
 
     return (
-        <main>Hello from Events
+        <div>Hello from Events
 
         <NewEventForm />
-        </main>
+        </div>
     )
 }
