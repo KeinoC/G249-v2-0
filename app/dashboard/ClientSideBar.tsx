@@ -121,7 +121,7 @@ export default function ClientSideBar() {
     <Navbar height={840} width={{ sm: 300 }} p="md" className={classes.navbar}>
       <Navbar.Section>
         <Text weight={500} size="sm" className={classes.title} color="dimmed" mb="xs">
-          bgluesticker@mantine.dev
+Welcome!
         </Text>
 
         <SegmentedControl
