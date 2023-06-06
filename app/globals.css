@@ -10,8 +10,12 @@
   --boxShadowInset3: -26px -26px 20px rgba(0, 0, 0, 0.53) inset;
   --boxShadowInset2: -10px -10px 20px rgba(0, 0, 0, 0.53) inset;
   --boxShadowInset1: -5px -5px 10px rgba(0, 0, 0, 0.53) inset;
+  --boxShadow3: -26px -26px 20px rgba(0, 0, 0, 0.53) ;
+  --boxShadow2: -10px -10px 20px rgba(0, 0, 0, 0.53) ;
+  --boxShadow1: -5px -5px 10px rgba(0, 0, 0, 0.53) ;
   --bgLightMode1: rgb(216, 252, 246);
   --bgLightMode2: rgb(183, 254, 243);
+  --accentLightMode1: rgb(255, 200, 0);
 }
 
 @media (prefers-color-scheme: dark) {

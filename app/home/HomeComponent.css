@@ -19,7 +19,9 @@
 }
 
 .garden {
+    color: var(--accentLightMode1);
     font-size: 5rem;
+    text-shadow: 20px 10px 7px rgba(0, 0, 0, 0.1);
 }
 
 .big-button {
@@ -37,4 +39,31 @@
 .big-button:hover {
     box-shadow: var(--boxShadowInset2);
     transform: scale(1.01);
+}
+
+@media screen and (min-width: 300px) and (max-width: 950px) {
+
+
+    .garden {
+        font-size: 4rem;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 95vw;
+    }
+
+    .big-button {
+        width:40vw;
+        height:40vw;
+        margin: .5rem;
+        /* box-shadow: var(--boxShadowInset1); */
+        font-size: 2rem;
+        color: black;
+        transition: ease-in-out 0.3s;
+    }
+
 }
