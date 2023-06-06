@@ -16,4 +16,3 @@ export default function NavBar() {
         </div>
     );
 }
-document.querySelector("body")
