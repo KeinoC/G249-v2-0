@@ -1,0 +1,10 @@
+.mantine-Accordion-control {
+    font-size: large!important;
+    font-weight: bolder;
+} 
+
+.mantine-Accordion-panel {
+    font-size: large;
+    color: rgb(89, 87, 87);
+    background-color: var(--accentLightMode1)
+}
