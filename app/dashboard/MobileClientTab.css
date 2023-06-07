@@ -1,0 +1,18 @@
+.MobileTabbedDashboard-page {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-content: center;
+    justify-content: center;
+}
+
+.tab-container {
+    width: 100vw;
+}
+
+.tab-content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    font-size: 3rem;
+}

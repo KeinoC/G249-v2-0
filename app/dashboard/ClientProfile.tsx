@@ -20,7 +20,7 @@ export default function ClientProfile() {
 
     return (
         <div className="tab-display-container">
-            Hello from Client Events!
+            Hello from Client Profile!
         </div>
     );
 }
