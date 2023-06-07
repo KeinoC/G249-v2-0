@@ -5,7 +5,6 @@ import { EventContext } from "../Context/EventProvider/EventContext";
 import { MiscContext } from "../Context/MiscProvider/MiscContext"
 import NavBar from "../home/NavBar"
 import MobileClientSideBar from "./MobileClientSideBar"
-import MobileTabbedDashboard from "./MobileTabbedDashboard"
 
 export default function Dashboard() {
     // Imports States along with types from state manager (AppProvider)
@@ -16,13 +15,12 @@ export default function Dashboard() {
     console.log(isMobile);
 
 
-    // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
 
     return (
         <div>
             <NavBar />
-            <MobileTabbedDashboard />
+            {isMobile ? <MobileClientSideBar /> : <ClientSideBar />}
         </div>
     );
 }

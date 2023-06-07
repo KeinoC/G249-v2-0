@@ -7,22 +7,20 @@ import NavBar from "../home/NavBar"
 import MobileClientSideBar from "./MobileClientSideBar"
 import MobileTabbedDashboard from "./MobileTabbedDashboard"
 
-export default function Dashboard() {
+export default function ClientEvents() {
     // Imports States along with types from state manager (AppProvider)
     const EventListing = useContext(EventContext);
     const { allEvents } = EventListing || {};
     const { isMobile }= useContext(MiscContext);
 
-    console.log(isMobile);
 
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
 
     return (
-        <div>
-            <NavBar />
-            <MobileTabbedDashboard />
+        <div className="tab-display-container">
+            Hello from Client Events!
         </div>
     );
 }
