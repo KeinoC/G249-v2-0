@@ -6,6 +6,8 @@ import { MiscContext } from "../../Context/MiscProvider/MiscContext"
 import NavBar from "../../home/NavBar"
 import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
+import { Group } from '@mantine/core';
+import { Calendar } from '@mantine/dates';
 
 export default function EventCalendar() {
     // Imports States along with types from state manager (AppProvider)
