@@ -1,0 +1,17 @@
+.mantine-Calendar-calendar {
+    min-width: 90vw;
+    aspect-ratio: 1/1;
+    padding: 0;
+    margin: 0;
+    align-self: center;
+}
+
+.mantine-Calendar-calendarHeader {
+    align-self: center;
+}
+
+
+.mantine-Calendar-day {
+    width: 14vw;
+
+}
