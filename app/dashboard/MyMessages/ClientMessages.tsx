@@ -20,7 +20,7 @@ export default function ClientMessages() {
 
     return (
         <div className="tab-display-container">
-            Hello from Client Events!
+            Hello from Client Messages!
         </div>
     );
 }
