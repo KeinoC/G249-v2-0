@@ -14,7 +14,7 @@ export default function Dashboard() {
     const { allEvents } = EventListing || {};
     const { isMobile }= useContext(MiscContext);
 
-    console.log(isMobile);
+
 
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}

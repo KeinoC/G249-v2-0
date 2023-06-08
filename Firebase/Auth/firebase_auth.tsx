@@ -76,3 +76,15 @@ const Login: React.FC = () => {
 };
 
 export { Signup, Login };
+
+
+    //     {
+    //     userId: "1",
+    //     username: "keinoc",
+    //     first_name: "Keino",
+    //     last_name: "Chichester",
+    //     address: "Brooklyn, New York",
+    //     profile_img:
+    //         "https://i.pinimg.com/564x/75/e1/73/75e173eb37b5d047c9476ccc49cacf5b.jpg",
+    //     friend_since: "Dec, 2018",
+    // }
