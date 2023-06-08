@@ -24,6 +24,8 @@ interface UserContextProps {
     setPassword: React.Dispatch<React.SetStateAction<string>>;
     handleSignup: () => Promise<void>;
     handleSocialSignup: (provider: firebase.auth.AuthProvider) => Promise<void>;
+    handleLogin: () => Promise<void>;
+    handleSocialLogin: (provider: firebase.auth.AuthProvider) => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -41,6 +43,8 @@ export const UserContext = createContext<UserContextProps>({
     setPassword: () => {},
     handleSignup: async () => {},
     handleSocialSignup: async () => {},
+    handleLogin: async () => {},
+    handleSocialLogin: async () => {},
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -80,6 +84,26 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
+    const handleLogin = async () => {
+        try {
+            await app.auth().signInWithEmailAndPassword(email, password);
+            // Login successful
+        } catch (error) {
+            console.log((error as firebase.auth.Error).message);
+            // Handle login error
+        }
+    };
+
+    const handleSocialLogin = async (provider: firebase.auth.AuthProvider) => {
+        try {
+            await app.auth().signInWithPopup(provider);
+            // Social login successful
+        } catch (error) {
+            console.log((error as firebase.auth.Error).message);
+            // Handle social login error
+        }
+    };
+
     return (
         <UserContext.Provider
             value={{
@@ -89,6 +113,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 setPassword,
                 handleSignup,
                 handleSocialSignup,
+                handleLogin,
+                handleSocialLogin,
             }}
         >
             {children}
