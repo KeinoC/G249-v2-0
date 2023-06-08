@@ -6,6 +6,7 @@ username: string;
 first_name: string;
 last_name: string;
 address: string;
+profile_img: string;
 }
 
 export interface UserContextProps {
@@ -19,17 +20,21 @@ username: '',
 first_name: '',
 last_name: '',
 address: '',
+profile_img: '',
 },
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const [user, setUser] = useState<User>({
-userId: '',
-username: '',
-first_name: '',
-last_name: '',
-address: '',
+userId: '1',
+username: 'keinoc',
+first_name: 'Keino',
+last_name: 'Chichester',
+address: 'Brooklyn, New York',
+profile_img: 'https://i.pinimg.com/564x/75/e1/73/75e173eb37b5d047c9476ccc49cacf5b.jpg',
 });
+
+
 
 return (
 <UserContext.Provider value={{ user }}>
