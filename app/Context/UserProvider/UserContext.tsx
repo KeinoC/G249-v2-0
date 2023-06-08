@@ -7,6 +7,7 @@ first_name: string;
 last_name: string;
 address: string;
 profile_img: string;
+friend_since: string;
 }
 
 export interface UserContextProps {
@@ -21,6 +22,7 @@ first_name: '',
 last_name: '',
 address: '',
 profile_img: '',
+friend_since: '',
 },
 });
 
@@ -32,6 +34,7 @@ first_name: 'Keino',
 last_name: 'Chichester',
 address: 'Brooklyn, New York',
 profile_img: 'https://i.pinimg.com/564x/75/e1/73/75e173eb37b5d047c9476ccc49cacf5b.jpg',
+friend_since: "Dec, 2018"
 });
 
 

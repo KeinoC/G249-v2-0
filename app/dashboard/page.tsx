@@ -6,6 +6,7 @@ import { MiscContext } from "../Context/MiscProvider/MiscContext"
 import NavBar from "../home/NavBar"
 import MobileClientSideBar from "./MobileClientSideBar"
 import MobileTabbedDashboard from "./MobileTabbedDashboard"
+import ProfileSummary from "./MyProfile/ProfileSummary";
 
 export default function Dashboard() {
     // Imports States along with types from state manager (AppProvider)
@@ -22,6 +23,7 @@ export default function Dashboard() {
     return (
         <div>
             <NavBar />
+            <ProfileSummary />
             <MobileTabbedDashboard />
         </div>
     );

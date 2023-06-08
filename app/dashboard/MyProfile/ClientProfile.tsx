@@ -22,7 +22,6 @@ export default function ClientProfile() {
     return (
         <div className="tab-display-container">
             Hello from Client Profile!
-            <ProfileSummary />
         </div>
     );
 }
