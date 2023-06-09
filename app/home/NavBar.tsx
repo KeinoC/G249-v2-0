@@ -32,7 +32,7 @@ console.log(user)
                 <Link href="/events">Events</Link>
             </li>
 
-            {user?.username ? (
+            {user?.email ? (
                 <li onClick={logout} className="nav-item">
                     Logout
                 </li>

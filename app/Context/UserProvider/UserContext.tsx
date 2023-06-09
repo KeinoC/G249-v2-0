@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import {
     app,
     googleProvider,
@@ -9,7 +9,8 @@ import "firebase/auth";
 
 interface User {
     userId: string;
-    username?: string | null; // Make username property optional
+    username?: string | null;
+    email?: string | null;
     first_name: string;
     last_name: string;
     address: string;
@@ -18,7 +19,7 @@ interface User {
 }
 
 interface UserContextProps {
-    user: User;
+    user: User | undefined;
     setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
     email: string;
     setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -34,14 +35,7 @@ interface UserContextProps {
 }
 
 export const UserContext = createContext<UserContextProps>({
-    user: {
-        userId: "",
-        first_name: "",
-        last_name: "",
-        address: "",
-        profile_img: "",
-        friend_since: "",
-    },
+    user: undefined,
     setUser: () => {},
     email: "",
     setEmail: () => {},
@@ -59,10 +53,11 @@ export const UserContext = createContext<UserContextProps>({
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [user, setUser] = useState<User | undefined>();
+    const [user, setUser] = useState<User | undefined>(undefined);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const handleSignup = async () => {
         try {
@@ -92,32 +87,39 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         try {
             await app.auth().signInWithEmailAndPassword(email, password);
             // Login successful
-            const currentUser = app.auth().currentUser;
-            if (currentUser) {
-                const {
-                    uid: userId,
-                    displayName: displayName,
-                    email,
-                    photoURL: profile_img,
-                } = currentUser;
-                const user: User = {
-                    userId,
-                    username: displayName,
-                    first_name: "",
-                    last_name: "",
-                    address: "",
-                    profile_img: profile_img || "",
-                    friend_since: "",
-                };
-                setUser(user);
-            }
-            // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
             console.log((error as firebase.auth.Error).message);
             // Handle login error
         }
     };
+
+    useEffect(() => {
+        const unsubscribe = app.auth().onAuthStateChanged((user) => {
+            if (user) {
+                const authUser: User = {
+                    email: user.email || "",
+                    userId: "",
+                    first_name: "",
+                    last_name: "",
+                    address: "",
+                    profile_img: "",
+                    friend_since: "",
+                };
+                setUser(authUser);
+                setIsLoggedIn(true)
+                // User is logged in
+                // setEmail(user.email);
+            } else {
+                // No user is logged in
+                setEmail("");
+                setIsLoggedIn(false);
+            }
+        });
+
+        // Clean up the subscription when the component unmounts
+        return () => unsubscribe();
+    }, []);
 
     const handleSocialLogin = async (provider: firebase.auth.AuthProvider) => {
         try {
@@ -134,6 +136,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 const user: User = {
                     userId,
                     username: displayName,
+                    email: email || "",
                     first_name: "",
                     last_name: "",
                     address: "",
@@ -168,6 +171,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             value={{
                 user: user || {
                     userId: "",
+                    email: "",
                     first_name: "",
                     last_name: "",
                     address: "",

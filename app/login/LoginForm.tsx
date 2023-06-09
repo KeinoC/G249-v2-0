@@ -4,6 +4,7 @@ import { UserContext } from "../Context/UserProvider/UserContext";
 import { Button, ButtonProps,Group } from "@mantine/core";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
 
+
 interface CustomButtonProps {
     onClick: () => Promise<void>;
     children: React.ReactNode;
@@ -47,11 +48,16 @@ export default function LoginForm() {
         handleSocialLogin,
         googleProvider,
         facebookProvider,
+        handleLogout,
     } = useContext(UserContext);
+
+    console.log(user);
 
     return (
         <div>
             <h2>Login</h2>
+
+            <form onSubmit={handleLogin}>
             <input
                 type="email"
                 placeholder="Email"
@@ -64,7 +70,11 @@ export default function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin}>Login with Email</button>
+            <Button className="bg-black" onClick={handleLogin}>Login with Email</Button>
+            <Button className="bg-black" onClick={handleLogout}>Logout</Button>
+</form>
+
+{/* 
             <Group position="center" sx={{ padding: 15 }}>
                 <CustomGoogleButton
                     onClick={() => handleSocialLogin(googleProvider)}
@@ -76,7 +86,7 @@ export default function LoginForm() {
                 >
                     Login with Facebook
                 </CustomFacebookButton>
-            </Group>
+            </Group> */}
         </div>
     );
 }

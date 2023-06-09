@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
 import LoginForm from "./LoginForm"
+import Signup from "./Signup"
 
 export default function Login() {
     const {
@@ -22,6 +23,7 @@ export default function Login() {
     return (
         <div>
 <LoginForm />
+<Signup />
         </div>
     );
 }
