@@ -28,6 +28,8 @@ interface UserContextProps {
     setEmail: Dispatch<SetStateAction<string>>;
     password: string;
     setPassword: Dispatch<SetStateAction<string>>;
+    isLoggedIn: boolean;
+    // setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
     handleSignup: () => Promise<void>;
     handleSocialSignup: (provider: firebase.auth.AuthProvider) => Promise<void>;
     handleLogin: () => Promise<void>;
@@ -49,6 +51,8 @@ export const UserContext = createContext<UserContextProps>({
     email: "",
     setEmail: () => {},
     password: "",
+    isLoggedIn: false,
+    // setIsLoggedIn: () => {},
     setPassword: () => {},
     handleSignup: async () => {},
     handleSocialSignup: async () => {},
@@ -183,7 +187,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         try {
             await app.auth().signOut();
             // Logout successful
-            setUser(undefined); // Reset user state
+            setUser(undefined);
+            setIsLoggedIn(false) // Reset user state
             // Redirect to home page
             window.location.href = "/";
         } catch (error) {
@@ -335,6 +340,7 @@ const deleteUserById = async (userId: string): Promise<void> => {
                 updateUser,
                 getUserById,
                 deleteUserById,
+                isLoggedIn,
             }}
         >
             {children}

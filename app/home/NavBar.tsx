@@ -1,22 +1,14 @@
 "use client"
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./NavBar.css";
 import Link from "next/link";
 import { UserContext } from "../Context/UserProvider/UserContext";
 import { app } from "../../Firebase/firebase-config";
 
 export default function NavBar() {
-    const { user, handleLogout } = useContext(UserContext);
+    const { user, handleLogout, isLoggedIn } = useContext(UserContext);
 
-    const logout = async () => {
-        try {
-            await app.auth().signOut();
-            handleLogout();
-        } catch (error) {
-            console.log(error);
-            // Handle logout error
-        }
-    };
+
 
 console.log(user)
 
@@ -25,15 +17,23 @@ console.log(user)
             <li className="nav-item">
                 <Link href="/">GARDEN249</Link>
             </li>
+
+            {isLoggedIn ?
             <li className="nav-item">
                 <Link href="/dashboard">Dashboard</Link>
             </li>
+            : <></>
+}
+
+            {isLoggedIn ?
             <li className="nav-item">
                 <Link href="/events">Events</Link>
             </li>
+            : <></>
+}
 
             {user?.email ? (
-                <li onClick={logout} className="nav-item">
+                <li onClick={handleLogout} className="nav-item">
                     Logout
                 </li>
             ) : (
