@@ -21,12 +21,12 @@ export default function ProfileSummary() {
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
             <div className="profile-image-container w-1/4 rounded-full object-cover mx-2">
-                <img className="rounded-full object-cover aspect-square" alt={user.first_name} src={user.profile_img} />
+                <img className="rounded-full object-cover aspect-square" alt={user?.first_name} src={user?.profile_img} />
             </div>
 
             <div className="profile-detail-container w-3/4 flex flex-col mx-2 m-auto">
-                <span className="text-lg  justify-start">{user.first_name} {user.last_name}</span>
-                <li className="text-sm list-none">Member since: {user.friend_since}</li>
+                <span className="text-lg  justify-start">{user?.first_name} {user?.last_name}</span>
+                <li className="text-sm list-none">Member since: {user?.friend_since}</li>
                 <div className=" text-sm alert-container ">
                     <button className="bg-amber-400 p-1 m-1 justify-self-start rounded hover:rounded-lg">Test Alert 1</button>
                     <button className="bg-amber-400 p-1 m-1 rounded hover:rounded-lg">Test Alert 2</button>

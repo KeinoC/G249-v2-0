@@ -1,4 +1,5 @@
-import { db } from "../firebase-config";
+import { app, db } from "../firebase-config";
+import firebase from "firebase/app";
 
 interface User {
     userId: string;
@@ -24,15 +25,17 @@ export const createUser = async (userData: User): Promise<string> => {
 };
 
 export const updateUser = async (
-    userId: string,
-    updatedData: Partial<User>
+    additionalData: Record<string, any>
 ): Promise<void> => {
+    const user = app.auth().currentUser;
+
     try {
-        const userRef = db.collection("users").doc(userId);
-        await userRef.update(updatedData);
-        console.log("User updated with ID:", userId);
+        // Update the additional data
+        await user?.updateProfile(additionalData);
+
+        console.log("Additional data updated successfully");
     } catch (error) {
-        console.error("Error updating user:", error);
+        console.error("Error updating additional data:", error);
         throw error;
     }
 };
@@ -54,25 +57,26 @@ export const getAllUsers = async (): Promise<User[]> => {
     }
 };
 
-export const getUserById = async (userId: string): Promise<User> => {
+export const getUserById = async (userId: string): Promise<void> => {
     try {
-        const userRef = db.collection("users").doc(userId);
-        const doc = await userRef.get();
-        if (doc.exists) {
-            return {
-                userId: doc.id,
-                ...doc.data(),
-            } as User;
-        } else {
-            throw new Error("User not found");
-        }
-    } catch (error) {
-        console.error("Error retrieving user:", error);
-        throw error;
+    const userRef = db.collection("users").doc(userId);
+    const doc = await userRef.get();
+    if (doc.exists) {
+    // This line is not needed because the getUserById function is not supposed to return anything.
+    // return {
+    //     userId: doc.id,
+    //     ...doc.data(),
+    // } as User;
+    } else {
+    throw new Error("User not found");
     }
-};
+    } catch (error) {
+    console.error("Error retrieving user:", error);
+    throw error;
+    }
+    };
 
-export const deleteUser = async (userId: string): Promise<void> => {
+export const deleteUserById = async (userId: string): Promise<void> => {
     try {
         const userRef = db.collection("users").doc(userId);
         await userRef.delete();
