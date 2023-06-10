@@ -22,6 +22,17 @@ export default function ClientProfileForm() {
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
+    // interface User {
+    //     userId: string;
+    //     displayName?: string | null;
+    //     email?: string | null;
+    //     first_name: string;
+    //     last_name: string;
+    //     address: string;
+    //     profile_img: string;
+    //     friend_since: string;
+    // }
+
 const personalInfo = (
     <div>
         <h2 className="font-bold text-lg">Personal Info</h2>
@@ -29,6 +40,8 @@ const personalInfo = (
         <li><span className="font-bold">First Name: </span>{user?.first_name}</li>
         <li><span className="font-bold">Last Name: </span>{user?.last_name}</li>
         <li><span className="font-bold">Email: </span>{user?.email}</li>
+        {/* <li><span className="font-bold">Phone: </span>{user?.phone}</li> */}
+        <li><span className="font-bold">Address </span>{user?.address}</li>
         </div>
     </div>
 )

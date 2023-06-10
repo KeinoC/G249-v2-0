@@ -83,6 +83,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         try {
             await app.auth().createUserWithEmailAndPassword(email, password);
             // Signup successful
+            await app.auth().signInWithEmailAndPassword(email, password)
             // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
@@ -128,7 +129,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                     friend_since: "",
                 };
                 setUser(user);
-                console.log(user);
+                createUser(user);
             }
             // Login successful
             window.location.href = "/dashboard";
