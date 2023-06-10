@@ -4,6 +4,7 @@ import ClientSideBar from "../ClientSideBar"
 import ProfileSummary from "./ProfileSummary"
 import { EventContext } from "../../Context/EventProvider/EventContext";
 import { MiscContext } from "../../Context/MiscProvider/MiscContext"
+import { UserContext } from "../../Context/UserProvider/UserContext"
 import NavBar from "../../home/NavBar"
 import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
@@ -13,15 +14,30 @@ export default function ClientProfileForm() {
     const EventListing = useContext(EventContext);
     const { allEvents } = EventListing || {};
     const { isMobile }= useContext(MiscContext);
+    const { isLoggedIn, user } = useContext(UserContext);
 
+
+    console.log(user)
 
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
+const personalInfo = (
+    <div>
+        <h2 className="font-bold text-lg">Personal Info</h2>
+        <div className="info-container text-sm" >
+        <li><span className="font-bold">First Name: </span>{user?.first_name}</li>
+        <li><span className="font-bold">Last Name: </span>{user?.last_name}</li>
+        <li><span className="font-bold">Email: </span>{user?.email}</li>
+        </div>
+    </div>
+)
+
+
 
     return (
         <div className="tab-display-container">
-    
+{personalInfo}
         </div>
     );
 }

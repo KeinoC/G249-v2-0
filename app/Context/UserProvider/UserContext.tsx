@@ -116,6 +116,20 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const handleLogin = async () => {
         try {
             await app.auth().signInWithEmailAndPassword(email, password);
+            const currentUser = app.auth().currentUser;
+            if (currentUser) {
+                const user: User = {
+                    userId: currentUser.uid,
+                    email: currentUser.email || "",
+                    first_name: "",
+                    last_name: "",
+                    address: "",
+                    profile_img: "",
+                    friend_since: "",
+                };
+                setUser(user);
+                console.log(user);
+            }
             // Login successful
             window.location.href = "/dashboard";
         } catch (error) {
