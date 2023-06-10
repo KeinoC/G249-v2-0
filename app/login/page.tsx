@@ -15,7 +15,7 @@ export default function Login() {
         handleSignup,
         handleSocialSignup,
         handleLogin,
-        handleSocialLogin,
+        // handleSocialLogin,
         googleProvider,
         facebookProvider,
     } = useContext(UserContext);

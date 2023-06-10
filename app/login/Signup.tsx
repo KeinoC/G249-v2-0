@@ -44,7 +44,7 @@ export default function Signup() {
         handleSignup,
         handleSocialSignup,
         handleLogin,
-        handleSocialLogin,
+        // handleSocialLogin,
         googleProvider,
         facebookProvider,
     } = useContext(UserContext);

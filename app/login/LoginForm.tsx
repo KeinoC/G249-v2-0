@@ -45,7 +45,7 @@ export default function LoginForm() {
         handleSignup,
         handleSocialSignup,
         handleLogin,
-        handleSocialLogin,
+        // handleSocialLogin,
         googleProvider,
         facebookProvider,
         handleLogout,
