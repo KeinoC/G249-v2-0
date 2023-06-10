@@ -20,13 +20,13 @@ export default function ProfileSummary() {
 
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
-                <Image
+                {/* <Image
                     className="rounded-full object-cover aspect-square"
                     alt={user?.first_name || ""}
-                    src={user?.profile_img || ""} // Provide a default placeholder image
+                    src={user?.profile_img || "#"} // Provide a default placeholder image
                     width={200} // Set the width of the image
                     height={200} // Set the height of the image
-                />
+                /> */}
 
             <div className="profile-detail-container w-3/4 flex flex-col mx-2 m-auto">
                 <span className="text-lg  justify-start">{user?.first_name} {user?.last_name}</span>
