@@ -16,8 +16,6 @@ export default function ProfileSummary() {
     const { isMobile } = useContext(MiscContext);
     const { user } = useContext(UserContext);
 
-    // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
-//
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
 
