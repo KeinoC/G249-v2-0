@@ -8,6 +8,8 @@ import { UserContext } from "../../Context/UserProvider/UserContext"
 import NavBar from "../../home/NavBar"
 import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 
 export default function ClientProfileForm() {
     // Imports States along with types from state manager (AppProvider)
@@ -15,9 +17,9 @@ export default function ClientProfileForm() {
     const { allEvents } = EventListing || {};
     const { isMobile }= useContext(MiscContext);
     const { isLoggedIn, user } = useContext(UserContext);
+    const [opened, { open, close }] = useDisclosure(false);
 
 
-    console.log(user)
 //
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
@@ -34,16 +36,24 @@ export default function ClientProfileForm() {
     // }
 
 const personalInfo = (
-    <div>
+
+        <>
+        <Modal opened={opened} onClose={close} title="Authentication" centered>
+        <div>
         <h2 className="font-bold text-lg">Personal Info</h2>
         <div className="info-container text-sm" >
         <li><span className="font-bold">First Name: </span>{user?.first_name}</li>
         <li><span className="font-bold">Last Name: </span>{user?.last_name}</li>
         <li><span className="font-bold">Email: </span>{user?.email}</li>
-        {/* <li><span className="font-bold">Phone: </span>{user?.phone}</li> */}
         <li><span className="font-bold">Address </span>{user?.address}</li>
         </div>
     </div>
+        </Modal>
+  
+        <Group position="center">
+          <Button className="bg-black" onClick={open}>Edit Profile Info</Button>
+        </Group>
+      </>
 )
 
 
