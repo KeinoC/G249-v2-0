@@ -87,23 +87,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const handleSignup = async () => {
         try {
-            await app.auth().createUserWithEmailAndPassword(email, password);
+            await app
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then((cred) => {
+                    return db.collection("users").doc(cred.user?.uid).set({
+                        email: email,
+                    });
+                });
             // Signup successful
-            await app.auth().signInWithEmailAndPassword(email, password);
-            const currentUser = app.auth().currentUser;
-            if (currentUser) {
-                const newUser: User = {
-                    userId: currentUser.uid,
-                    email: currentUser.email || null,
-                    first_name: "",
-                    last_name: "",
-                    address: "",
-                    profile_img: "",
-                    friend_since: "",
-                };
-                createUser(newUser);
-                console.log(newUser);
-            }
             // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
@@ -280,9 +272,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             }
 
             // Create new user
-            const docRef = await db.collection("users").add(userData);
-            console.log("User created with ID:", docRef.id);
+            const docRef = db.collection("users").doc();
+            await docRef.set({
+                id: docRef.id,
+                email: userData.email,
+            });
 
+            console.log("User created with ID:", docRef.id);
             return docRef.id;
         } catch (error) {
             console.error("Error creating user:", error);
