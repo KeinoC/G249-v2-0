@@ -18,7 +18,7 @@ export default function ClientProfileForm() {
 
 
     console.log(user)
-
+//
 
     // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
