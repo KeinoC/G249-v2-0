@@ -1,6 +1,16 @@
 "use client";
-import React, { createContext, useState, useEffect, Dispatch, SetStateAction } from "react";
-import { getUserById, deleteUserById, updateUser } from '@/Firebase/endpoints/users';
+import React, {
+    createContext,
+    useState,
+    useEffect,
+    Dispatch,
+    SetStateAction,
+} from "react";
+import {
+    getUserById,
+    deleteUserById,
+    updateUser,
+} from "@/Firebase/endpoints/users";
 import {
     app,
     db,
@@ -12,7 +22,6 @@ import "firebase/auth";
 
 interface User {
     userId: string;
-    displayName?: string | null;
     email?: string | null;
     first_name: string;
     last_name: string;
@@ -40,10 +49,8 @@ interface UserContextProps {
     // getAllUsers: () => Promise<void>;
     getUserById: (userId: string) => Promise<void>;
     deleteUserById: (userId: string) => Promise<void>;
-    updateUser: (additionalData: {[key: string]: any}) => Promise<void>;
+    updateUser: (additionalData: { [key: string]: any }) => Promise<void>;
 }
-
-
 
 export const UserContext = createContext<UserContextProps>({
     user: undefined,
@@ -67,23 +74,34 @@ export const UserContext = createContext<UserContextProps>({
     updateUser: async () => {},
 });
 
-
-
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const [user, setUser] = useState<User | undefined>(undefined);
-    
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleSignup = async () => {
         try {
             await app.auth().createUserWithEmailAndPassword(email, password);
             // Signup successful
-            await app.auth().signInWithEmailAndPassword(email, password)
+            await app.auth().signInWithEmailAndPassword(email, password);
+            const currentUser = app.auth().currentUser;
+            if (currentUser) {
+                const newUser: User = {
+                    userId: currentUser.uid,
+                    email: currentUser.email || null,
+                    first_name: "",
+                    last_name: "",
+                    address: "",
+                    profile_img: "",
+                    friend_since: "",
+                };
+                createUser(newUser);
+                console.log(newUser);
+            }
             // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
@@ -92,20 +110,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-///------------------------------- "USER AUTHENTICATION LOGIC"-------------------------------///
-////////////////////////////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ///------------------------------- "USER AUTHENTICATION LOGIC"-------------------------------///
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     const handleSocialSignup = async (provider: firebase.auth.AuthProvider) => {
         try {
             await app.auth().signInWithPopup(provider);
             // Social signup successful
+
             // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
@@ -129,7 +142,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                     friend_since: "",
                 };
                 setUser(user);
-                createUser(user);
             }
             // Login successful
             window.location.href = "/dashboard";
@@ -152,7 +164,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                     friend_since: "",
                 };
                 setUser(authUser);
-                setIsLoggedIn(true)
+                setIsLoggedIn(true);
                 // User is logged in
                 // setEmail(user.email);
             } else {
@@ -203,7 +215,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             await app.auth().signOut();
             // Logout successful
             setUser(undefined);
-            setIsLoggedIn(false) // Reset user state
+            setIsLoggedIn(false); // Reset user state
             // Redirect to home page
             window.location.href = "/";
         } catch (error) {
@@ -212,129 +224,135 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ///------------------------------- "USER CRUD ACTIONS &  LOGIC"------------------------------///
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-///------------------------------- "USER CRUD ACTIONS &  LOGIC"------------------------------///
-////////////////////////////////////////////////////////////////////////////////////////////////
+    /// setting full user object on login
+    // useEffect(() => {
+    //     if (user.userId?) {
 
-/// setting full user object on login
-// useEffect(() => {
-//     if (user.userId?) {
+    //     }
+    // }, [user])
 
-//     }
-// }, [user])
+    /// User to update
 
+    // const user = firebase.auth().currentUser;
 
-/// User to update
+    // // Update the additional data
+    // user
+    //   .updateProfile({
+    //     key1: "value1",
+    //     key2: "value2",
+    //   })
+    //   .then(() => {
+    //     console.log("Additional data updated successfully");
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error updating additional data:", error);
+    //   });
 
-
-// const user = firebase.auth().currentUser;
-
-// // Update the additional data
-// user
-//   .updateProfile({
-//     key1: "value1",
-//     key2: "value2",
-//   })
-//   .then(() => {
-//     console.log("Additional data updated successfully");
-//   })
-//   .catch((error) => {
-//     console.error("Error updating additional data:", error);
-//   });
-
-
-interface User {
-    userId: string;
-    username?: string | null;
-    email?: string | null;
-    first_name: string;
-    last_name: string;
-    address: string;
-    profile_img: string;
-    friend_since: string;
-}
-
-const createUser = async (userData: User): Promise<string> => {
-    try {
-        const docRef = await db.collection("users").add(userData);
-        console.log("User created with ID:", docRef.id);
-
-        return docRef.id;
-    } catch (error) {
-        console.error("Error creating user:", error);
-        throw error;
+    interface User {
+        userId: string;
+        username?: string | null;
+        email?: string | null;
+        first_name: string;
+        last_name: string;
+        address: string;
+        profile_img: string;
+        friend_since: string;
     }
-};
 
-const updateUser = async (
-    additionalData: Record<string, any>
-): Promise<void> => {
-    const user = app.auth().currentUser;
+    const createUser = async (userData: User): Promise<string> => {
+        try {
+            // Check if user already exists
+            const existingUserQuery = await db
+                .collection("users")
+                .where("email", "==", userData.email)
+                .get();
 
-    try {
-        // Update the additional data
-        await user?.updateProfile(additionalData);
+            if (!existingUserQuery.empty) {
+                // User already exists, handle accordingly
+                console.log("User with email already exists");
+                return ""; // or throw an error, or handle as needed
+            }
 
-        console.log("Additional data updated successfully");
-    } catch (error) {
-        console.error("Error updating additional data:", error);
-        throw error;
-    }
-};
+            // Create new user
+            const docRef = await db.collection("users").add(userData);
+            console.log("User created with ID:", docRef.id);
 
-const getAllUsers = async (): Promise<User[]> => {
-    try {
-        const snapshot = await db.collection("users").get();
-        const users: User[] = snapshot.docs.map(
-            (doc) =>
-                ({
-                    userId: doc.id,
-                    ...doc.data(),
-                } as User)
-        );
-        return users;
-    } catch (error) {
-        console.error("Error retrieving users:", error);
-        throw error;
-    }
-};
-
-const getUserById = async (userId: string): Promise<void> => {
-    try {
-    const userRef = db.collection("users").doc(userId);
-    const doc = await userRef.get();
-    if (doc.exists) {
-    // This line is not needed because the getUserById function is not supposed to return anything.
-    // return {
-    //     userId: doc.id,
-    //     ...doc.data(),
-    // } as User;
-    } else {
-    throw new Error("User not found");
-    }
-    } catch (error) {
-    console.error("Error retrieving user:", error);
-    throw error;
-    }
+            return docRef.id;
+        } catch (error) {
+            console.error("Error creating user:", error);
+            throw error;
+        }
     };
 
-const deleteUserById = async (userId: string): Promise<void> => {
-    try {
-        const userRef = db.collection("users").doc(userId);
-        await userRef.delete();
-        console.log("User deleted with ID:", userId);
-    } catch (error) {
-        console.error("Error deleting user:", error);
-        throw error;
-    }
-};
+    const updateUser = async (
+        additionalData: Record<string, any>
+    ): Promise<void> => {
+        const user = app.auth().currentUser;
 
+        try {
+            // Update the additional data
+            await user?.updateProfile(additionalData);
 
+            console.log("Additional data updated successfully");
+        } catch (error) {
+            console.error("Error updating additional data:", error);
+            throw error;
+        }
+    };
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
+    const getAllUsers = async (): Promise<User[]> => {
+        try {
+            const snapshot = await db.collection("users").get();
+            const users: User[] = snapshot.docs.map(
+                (doc) =>
+                    ({
+                        userId: doc.id,
+                        ...doc.data(),
+                    } as User)
+            );
+            return users;
+        } catch (error) {
+            console.error("Error retrieving users:", error);
+            throw error;
+        }
+    };
 
+    const getUserById = async (userId: string): Promise<void> => {
+        try {
+            const userRef = db.collection("users").doc(userId);
+            const doc = await userRef.get();
+            if (doc.exists) {
+                // This line is not needed because the getUserById function is not supposed to return anything.
+                // return {
+                //     userId: doc.id,
+                //     ...doc.data(),
+                // } as User;
+            } else {
+                throw new Error("User not found");
+            }
+        } catch (error) {
+            console.error("Error retrieving user:", error);
+            throw error;
+        }
+    };
+
+    const deleteUserById = async (userId: string): Promise<void> => {
+        try {
+            const userRef = db.collection("users").doc(userId);
+            await userRef.delete();
+            console.log("User deleted with ID:", userId);
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            throw error;
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     return (
         <UserContext.Provider
@@ -362,6 +380,3 @@ const deleteUserById = async (userId: string): Promise<void> => {
         </UserContext.Provider>
     );
 };
-
-
-
