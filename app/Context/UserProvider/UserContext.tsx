@@ -50,6 +50,7 @@ interface UserContextProps {
     getUserById: (userId: string) => Promise<void>;
     deleteUserById: (userId: string) => Promise<void>;
     updateUser: (additionalData: { [key: string]: any }) => Promise<void>;
+    createUser: (user: User) => Promise<string | void>;
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -72,6 +73,7 @@ export const UserContext = createContext<UserContextProps>({
     getUserById: async () => {},
     deleteUserById: async () => {},
     updateUser: async () => {},
+    createUser: async () => {},
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -263,7 +265,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         friend_since: string;
     }
 
-    const createUser = async (userData: User): Promise<string> => {
+    const createUser = async (userData: User): Promise<string | void> => {
         try {
             // Check if user already exists
             const existingUserQuery = await db
@@ -374,6 +376,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 getUserById,
                 deleteUserById,
                 isLoggedIn,
+                createUser,
             }}
         >
             {children}

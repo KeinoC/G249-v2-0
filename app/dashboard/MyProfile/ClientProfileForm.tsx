@@ -1,66 +1,80 @@
-"use client";
 import React, { useContext, useState } from "react";
-import ClientSideBar from "../ClientSideBar"
-import ProfileSummary from "./ProfileSummary"
-import { EventContext } from "../../Context/EventProvider/EventContext";
-import { MiscContext } from "../../Context/MiscProvider/MiscContext"
-import { UserContext } from "../../Context/UserProvider/UserContext"
-import NavBar from "../../home/NavBar"
-import MobileClientSideBar from "../MobileClientSideBar"
-import MobileTabbedDashboard from "../MobileTabbedDashboard"
-import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button } from '@mantine/core';
+import { Modal, Group, Button, TextInput } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { UserContext } from "../../Context/UserProvider/UserContext";
 
 export default function ClientProfileForm() {
-    // Imports States along with types from state manager (AppProvider)
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
-    const { isMobile }= useContext(MiscContext);
-    const { isLoggedIn, user } = useContext(UserContext);
+    const { user, updateUser, createUser } = useContext(UserContext);
     const [opened, { open, close }] = useDisclosure(false);
 
+    const [formData, setFormData] = useState({
+        userId: user?.userId || "",
+        first_name: user?.first_name || "",
+        last_name: user?.last_name || "",
+        email: user?.email || "",
+        address: user?.address || "",
+        profile_img: user?.profile_img || "",
+        friend_since: user?.friend_since || "",
+    });
 
-//
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        createUser(formData)
+        updateUser(formData);
+        close();
+    };
 
-    // interface User {
-    //     userId: string;
-    //     displayName?: string | null;
-    //     email?: string | null;
-    //     first_name: string;
-    //     last_name: string;
-    //     address: string;
-    //     profile_img: string;
-    //     friend_since: string;
-    // }
-
-const personalInfo = (
-
+    const personalInfo = (
         <>
-        <Modal opened={opened} onClose={close} title="Authentication" centered>
-        <div>
-        <h2 className="font-bold text-lg">Personal Info</h2>
-        <div className="info-container text-sm" >
-        <li><span className="font-bold">First Name: </span>{user?.first_name}</li>
-        <li><span className="font-bold">Last Name: </span>{user?.last_name}</li>
-        <li><span className="font-bold">Email: </span>{user?.email}</li>
-        <li><span className="font-bold">Address </span>{user?.address}</li>
-        </div>
-    </div>
-        </Modal>
-  
-        <Group position="center">
-          <Button className="bg-black" onClick={open}>Edit Profile Info</Button>
-        </Group>
-      </>
-)
+            <Modal
+                opened={opened}
+                onClose={close}
+                title="Authentication"
+                centered
+            >
+                <form onSubmit={handleSubmit}>
+                    <h2 className="font-bold text-lg">Personal Info</h2>
+                    <TextInput
+                        label="First Name"
+                        name="first_name"
+                        value={formData.first_name}
+                        placeholder={formData.first_name}
+                        onChange={handleChange}
+                    />
+                    <TextInput
+                        label="Last Name"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        placeholder={formData.last_name}
+                    />
+                    <TextInput
+                        label="Address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        placeholder={formData.address}
+                    />
+                    <div style={{ marginTop: "1rem" }}>
+                        <Button className="bg-black"  type="submit">Save</Button>
+                    </div>
+                </form>
+            </Modal>
 
-
-
-    return (
-        <div className="tab-display-container">
-{personalInfo}
-        </div>
+            <Group position="center">
+                <Button className="bg-black" onClick={open}>
+                    Edit Profile Info
+                </Button>
+            </Group>
+        </>
     );
+
+    return <div className="tab-display-container">{personalInfo}</div>;
 }

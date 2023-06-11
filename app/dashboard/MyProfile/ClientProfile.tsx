@@ -34,8 +34,7 @@ export default function ClientProfile() {
         </div>
     </div>
 
-        <ClientProfileForm />   
-           
+        <ClientProfileForm />
         </div>
     );
 }
