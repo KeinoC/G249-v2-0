@@ -20,7 +20,7 @@ import {
 import firebase from "firebase/app";
 import "firebase/auth";
 
-interface User {
+export interface User {
     userId: string;
     email?: string | null;
     first_name: string;
@@ -31,8 +31,8 @@ interface User {
 }
 
 interface UserContextProps {
-    user: User | undefined;
-    setUser: Dispatch<SetStateAction<User | undefined>>;
+    user: User | undefined | void | null;
+    setUser: Dispatch<SetStateAction<User | undefined | void | null>>;
     email: string;
     setEmail: Dispatch<SetStateAction<string>>;
     password: string;
@@ -47,10 +47,11 @@ interface UserContextProps {
     googleProvider: firebase.auth.GoogleAuthProvider;
     facebookProvider: firebase.auth.FacebookAuthProvider;
     // getAllUsers: () => Promise<void>;
-    getUserById: (userId: string) => Promise<void>;
-    deleteUserById: (userId: string) => Promise<void>;
+    getUserById: (userId: string) => Promise<User | void | null | undefined>;
+    deleteUserById: (userId: string) => Promise<User | void | undefined | null>;
     updateUser: (additionalData: { [key: string]: any }) => Promise<void>;
     createUser: (user: User) => Promise<string | void>;
+    fullUser: User | void | null | undefined;
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -74,12 +75,16 @@ export const UserContext = createContext<UserContextProps>({
     deleteUserById: async () => {},
     updateUser: async () => {},
     createUser: async () => {},
+    fullUser: undefined,
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [user, setUser] = useState<User | undefined>(undefined);
+    const [user, setUser] = useState<User | undefined | void | null>(undefined);
+    const [fullUser, setFullUser] = useState<User | undefined | void | null>(
+        undefined
+    ); // to house firestore user which has all details
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -257,7 +262,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         friend_since: string;
     }
 
-    const createUser = async (userData: User): Promise<string | void> => {
+    const createUser = async (
+        userData: User
+    ): Promise<string | void | undefined> => {
         try {
             // Check if user already exists
             const existingUserQuery = await db
@@ -272,7 +279,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             }
 
             // Create new user
-            const docRef = db.collection("users").doc();
+            const docRef = db.collection("users").doc(userData.userId); // Use userData.userId as the document ID
             await docRef.set({
                 id: docRef.id,
                 email: userData.email,
@@ -292,12 +299,19 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         const user = app.auth().currentUser;
 
         try {
-            // Update the additional data
-            await user?.updateProfile(additionalData);
+            // Get the UID of the current user
+            const uid = user?.uid;
 
-            console.log("Additional data updated successfully");
+            if (uid) {
+                // Update the user document in the "users" collection
+                await db.collection("users").doc(uid).update(additionalData);
+
+                console.log("User data updated successfully");
+            } else {
+                throw new Error("User not found");
+            }
         } catch (error) {
-            console.error("Error updating additional data:", error);
+            console.error("Error updating user data:", error);
             throw error;
         }
     };
@@ -319,18 +333,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
-    const getUserById = async (userId: string): Promise<void> => {
+    const getUserById = async (userId: string): Promise<User | null> => {
         try {
             const userRef = db.collection("users").doc(userId);
             const doc = await userRef.get();
+
             if (doc.exists) {
-                // This line is not needed because the getUserById function is not supposed to return anything.
-                // return {
-                //     userId: doc.id,
-                //     ...doc.data(),
-                // } as User;
+                // Return the user data
+                return doc.data() as User;
             } else {
-                throw new Error("User not found");
+                return null; // Return null if the user doesn't exist
             }
         } catch (error) {
             console.error("Error retrieving user:", error);
@@ -348,6 +360,24 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             throw error;
         }
     };
+
+    //////////////////////////////////////////calling Cruds //////////////////////////////////
+
+    //setting Full firestore user to fullUser state
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user) {
+                try {
+                    const fetchedUser = await getUserById(user.userId);
+                    setFullUser(fetchedUser);
+                } catch (error) {
+                    console.error("Error fetching user:", error);
+                }
+            }
+        };
+
+        fetchData();
+    }, [getUserById, user]);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -373,6 +403,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 deleteUserById,
                 isLoggedIn,
                 createUser,
+                fullUser,
             }}
         >
             {children}

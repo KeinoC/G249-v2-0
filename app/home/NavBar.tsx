@@ -10,8 +10,6 @@ export default function NavBar() {
 
 
 
-console.log(user)
-
     return (
         <div className="navbar">
             <li className="nav-item">

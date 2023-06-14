@@ -1,11 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Modal, Group, Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { UserContext } from "../../Context/UserProvider/UserContext";
+import { UserContext, User } from "../../Context/UserProvider/UserContext";
 
 export default function ClientProfileForm() {
-    const { user, updateUser, createUser } = useContext(UserContext);
+    const { user, setUser, updateUser, createUser, getUserById, fullUser } =
+        useContext(UserContext);
     const [opened, { open, close }] = useDisclosure(false);
+
+
+        // const refreshUser = async () => {
+        //     if (user) {
+        //         try {
+        //             const firestoreUser: User | void = await getUserById(user?.userId);
+        //             setUser(firestoreUser);
+        //             console.log("gotUser")
+        //         } catch (error) {
+        //             console.error("Error fetching user:", error);
+        //         }
+        //     }
+        // };
 
     const [formData, setFormData] = useState({
         userId: user?.userId || "",
@@ -26,10 +40,13 @@ export default function ClientProfileForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createUser(formData)
+        createUser(formData);
+        // refreshUser();
         updateUser(formData);
+        setUser(formData);
         close();
     };
+
 
     const personalInfo = (
         <>
@@ -63,7 +80,9 @@ export default function ClientProfileForm() {
                         placeholder={formData.address}
                     />
                     <div style={{ marginTop: "1rem" }}>
-                        <Button className="bg-black"  type="submit">Save</Button>
+                        <Button className="bg-black" type="submit">
+                            Save
+                        </Button>
                     </div>
                 </form>
             </Modal>
