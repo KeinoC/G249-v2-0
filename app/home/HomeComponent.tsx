@@ -9,27 +9,25 @@ const HomeComponent = () => {
     const route =  useRouter();
 
 function handleExplore() {
-    route.push("./explore")
+    setTimeout(() => {
+
+        route.push("./explore-the-garden")
+    },1000)
 }
 
 function handleBook() {
-    route.push("./login")
+    setTimeout(() => {
+        route.push("./login")
+        
+    }, 1000);
 }
 
     return (
         <div className="home-page">
             <h1 className="garden">Garden 249</h1>
             <div className="button-container">
-                <Link
-                    href="/explore"
-                >
                     <button className="big-button" onClick={handleExplore}>Explore</button>
-                </Link>
-                <Link
-                    href="/login"
-                >
                     <button className="big-button" onClick={handleBook}>Book Now</button>
-                </Link>
             </div>
         </div>
     );
