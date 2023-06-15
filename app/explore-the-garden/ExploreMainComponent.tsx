@@ -2,9 +2,8 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
 import NavBar from "../home/NavBar"
-import ExploreMainComponent from "./ExploreMainComponent"
 
-export default function ExplorePage() {
+export default function ExploreMainComponent() {
     const {
         user,
         setUser,
@@ -22,8 +21,7 @@ export default function ExplorePage() {
 
     return (
 <div>
-<NavBar />
-<ExploreMainComponent />
+Hello From Explore!
 </div>
     );
 }

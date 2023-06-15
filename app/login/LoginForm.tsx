@@ -51,7 +51,7 @@ export default function LoginForm() {
         handleLogout,
     } = useContext(UserContext);
 
-    console.log(user);
+
 
     return (
         <div>

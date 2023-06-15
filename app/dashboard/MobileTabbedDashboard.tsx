@@ -4,6 +4,7 @@ import ClientEvents from './MyEvents/ClientEvents';
 import ClientFAQ from './FAQ/ClientFAQ';
 import ClientMessages from './MyMessages/ClientMessages';
 import ClientProfile from './MyProfile/ClientProfile';
+import ExploreTab from "./ExploreTab/ExploreTab"
 import "./MobileClientTab.css"
 
 interface TabComponent {
@@ -13,6 +14,11 @@ interface TabComponent {
 }
 
 const tabComponents: TabComponent[] = [
+  {
+    name: "Explore",
+    value: "explore",
+    component: <ExploreTab />,
+  },
   {
     name: "My Events",
     value: "events",
@@ -49,7 +55,7 @@ export default function MobileTabbedDashboard() {
   const renderTabs = tabComponents.map((tab, index) => {
     return (
       <Tabs.Tab
-      className="tab-item"
+      className="tab-item inline-block m-0 justify-space-between"
         key={index}
         value={tab.value}
         onClick={() => handleTabClick(tab.value)}
@@ -66,7 +72,7 @@ export default function MobileTabbedDashboard() {
           {renderTabs}
         </Tabs.List>
       </Tabs>
-      <div className="tab-content-container">
+      <div className="tab-content-container inline-block" >
       {tabComponents.find(tab => tab.value === selectedTab)?.component}
       </div>
     </div>

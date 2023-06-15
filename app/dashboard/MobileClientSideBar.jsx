@@ -11,7 +11,7 @@ export default function MobileClientSideBar() {
     const { allEvents } = EventListing || {};
     const { isMobile }= useContext(MiscContext);
 
-    console.log(isMobile);
+
 
     const [showSidebar, setShowSidebar] = useState(false);
 

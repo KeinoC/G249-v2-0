@@ -4,7 +4,7 @@ import { UserContext } from "../Context/UserProvider/UserContext";
 import NavBar from "../home/NavBar"
 import ExploreMainComponent from "./ExploreMainComponent"
 
-export default function ExplorePage() {
+export default function ExploreSlide() {
     const {
         user,
         setUser,
@@ -23,7 +23,7 @@ export default function ExplorePage() {
     return (
 <div>
 <NavBar />
-<ExploreMainComponent />
+Hello From Explorer Slide show Container
 </div>
     );
 }

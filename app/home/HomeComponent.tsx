@@ -26,8 +26,8 @@ function handleBook() {
         <div className="home-page">
             <h1 className="garden">Garden 249</h1>
             <div className="button-container">
-                    <button className="big-button" onClick={handleExplore}>Explore</button>
-                    <button className="big-button" onClick={handleBook}>Book Now</button>
+                    <button className="big-button" onClick={()=>handleExplore()}>Explore</button>
+                    <button className="big-button" onClick={()=>handleBook()}>Book Now</button>
             </div>
         </div>
     );
