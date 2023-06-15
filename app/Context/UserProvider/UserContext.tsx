@@ -333,6 +333,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getUserById = async (userId: string): Promise<User | null> => {
         try {
             const userRef = db.collection("users").doc(userId);
@@ -377,7 +378,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         };
 
         fetchData();
-    }, [getUserById, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
