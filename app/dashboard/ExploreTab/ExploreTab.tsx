@@ -6,6 +6,7 @@ import { MiscContext } from "../../Context/MiscProvider/MiscContext"
 import NavBar from "../../home/NavBar"
 import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
+import ExploreSlide from "../../explore-the-garden/ExploreSlide"
 
 export default function ExploreTab() {
     // Imports States along with types from state manager (AppProvider)
@@ -20,8 +21,7 @@ export default function ExploreTab() {
 
     return (
         <div className="tab-display-container">
-            Hello from Client Events!
-            <ExploreTab />
+            <ExploreSlide />
         </div>
     );
 }

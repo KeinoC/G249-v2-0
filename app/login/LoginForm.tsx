@@ -57,7 +57,7 @@ export default function LoginForm() {
         <div>
             <h2>Login</h2>
 
-            <form onSubmit={handleLogin}>
+            <form onSubmit={()=>handleLogin()}>
             <input
                 type="email"
                 placeholder="Email"
@@ -70,8 +70,8 @@ export default function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button className="bg-black" onClick={handleLogin}>Login with Email</Button>
-            <Button className="bg-black" onClick={handleLogout}>Logout</Button>
+            <Button className="bg-black" onClick={()=>handleLogin()}>Login with Email</Button>
+            <Button className="bg-black" onClick={()=>handleLogout()}>Logout</Button>
 </form>
 
 {/* 

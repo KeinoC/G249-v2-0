@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
 import NavBar from "../home/NavBar"
+import ExploreSlide from "./ExploreSlide";
 
 export default function ExploreMainComponent() {
     const {
@@ -21,7 +22,7 @@ export default function ExploreMainComponent() {
 
     return (
 <div>
-Hello From Explore!
+<ExploreSlide />
 </div>
     );
 }
