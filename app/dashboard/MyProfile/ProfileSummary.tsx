@@ -19,16 +19,16 @@ export default function ProfileSummary() {
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
             
-            <div>
+            <div className="w-1/4 flex">
                 <img
-                    className="object-cover rounded-full w-1/2 m-auto"
+                    className="object-cover rounded-full  m-auto"
                     src={fullUser?.profile_img}
                     alt="profile pic"
                 />
             </div>
 
             <div className="profile-detail-container w-3/4 flex flex-col mx-2 m-auto">
-                <div className="flex flex-row">
+                <div className="flex flex-col">
                     <span className="text-lg  justify-start">
                         {fullUser?.first_name} {fullUser?.last_name}
                     </span>
