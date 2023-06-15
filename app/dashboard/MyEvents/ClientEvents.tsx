@@ -21,7 +21,6 @@ export default function ClientEvents() {
 
     return (
         <div className="tab-display-container">
-            Hello from Client Events!
             <EventCalendar />
         </div>
     );

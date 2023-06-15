@@ -18,7 +18,6 @@ export default function ProfileSummary() {
 
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
-            
             <div className="w-1/4 flex">
                 <img
                     className="object-cover rounded-full  m-auto"
