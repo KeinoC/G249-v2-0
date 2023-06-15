@@ -14,19 +14,38 @@ export default function ProfileSummary() {
     const EventListing = useContext(EventContext);
     const { allEvents } = EventListing || {};
     const { isMobile } = useContext(MiscContext);
-    const { user } = useContext(UserContext);
+    const { user, fullUser } = useContext(UserContext);
 
     return (
         <div className="profile-summary-container flex flex-row bg-gray-300 p-1">
+            
+            <div>
+                <img
+                    className="object-cover rounded-full w-1/2 m-auto"
+                    src={fullUser?.profile_img}
+                    alt="profile pic"
+                />
+            </div>
 
             <div className="profile-detail-container w-3/4 flex flex-col mx-2 m-auto">
-                <span className="text-lg  justify-start">{user?.first_name} {user?.last_name}</span>
-                <li className="text-sm list-none">Member since: {user?.friend_since}</li>
-                <div className=" text-sm alert-container ">
-                    <button className="bg-amber-400 p-1 m-1 justify-self-start rounded hover:rounded-lg">Test Alert 1</button>
-                    <button className="bg-amber-400 p-1 m-1 rounded hover:rounded-lg">Test Alert 2</button>
+                <div className="flex flex-row">
+                    <span className="text-lg  justify-start">
+                        {fullUser?.first_name} {fullUser?.last_name}
+                    </span>
+                    <li className="text-sm list-none">
+                        Member since: {fullUser?.friend_since}
+                    </li>
                 </div>
+            <div className=" text-sm alert-container flex flex-row ">
+                <button className="bg-amber-400 p-1 m-1 justify-self-start rounded hover:rounded-lg">
+                    Test Alert 1
+                </button>
+                <button className="bg-amber-400 p-1 m-1 rounded hover:rounded-lg">
+                    Test Alert 2
+                </button>
             </div>
+            </div>
+
         </div>
     );
 }

@@ -8,18 +8,17 @@ export default function ClientProfileForm() {
         useContext(UserContext);
     const [opened, { open, close }] = useDisclosure(false);
 
-
-        // const refreshUser = async () => {
-        //     if (user) {
-        //         try {
-        //             const firestoreUser: User | void = await getUserById(user?.userId);
-        //             setUser(firestoreUser);
-        //             console.log("gotUser")
-        //         } catch (error) {
-        //             console.error("Error fetching user:", error);
-        //         }
-        //     }
-        // };
+    // const refreshUser = async () => {
+    //     if (user) {
+    //         try {
+    //             const firestoreUser: User | void = await getUserById(user?.userId);
+    //             setUser(firestoreUser);
+    //             console.log("gotUser")
+    //         } catch (error) {
+    //             console.error("Error fetching user:", error);
+    //         }
+    //     }
+    // };
 
     const [formData, setFormData] = useState({
         userId: user?.userId || "",
@@ -47,7 +46,6 @@ export default function ClientProfileForm() {
         close();
     };
 
-
     const personalInfo = (
         <>
             <Modal
@@ -71,6 +69,13 @@ export default function ClientProfileForm() {
                         value={formData.last_name}
                         onChange={handleChange}
                         placeholder={formData.last_name}
+                    />
+                    <TextInput
+                        label="Profile Image URL"
+                        name="profile_img"
+                        value={formData.profile_img}
+                        onChange={handleChange}
+                        placeholder={formData.profile_img}
                     />
                     <TextInput
                         label="Address"
