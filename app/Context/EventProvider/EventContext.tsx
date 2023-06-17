@@ -1,16 +1,22 @@
 "use client";
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getAllEvents, getEventById, deleteEvent, updateEvent } from '@/Firebase/endpoints/events';
+import {User} from "../UserProvider/UserContext"
+import { UserContext }  from "../UserProvider/UserContext"
+
+
 
 export interface GEvent {
-  id?: string;
-  eventHost: string;
-  eventDate: string;
-  bookingStatus: string;
+  id?: string | undefined;
+  eventHost: User | string | undefined | number | void | null;
+  eventDate: Date | undefined | string;
+  bookingStatus: string | undefined;
 }
 
 export interface EventContextProps {
+  eventHost: User | string;
+  eventDate: Date;
   allEvents: GEvent[] | string;
   setAllEvents: React.Dispatch<React.SetStateAction<GEvent[] | string>>;
   newEvent: GEvent;
@@ -22,7 +28,15 @@ export const EventContext = createContext<EventContextProps>({} as EventContextP
 export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [allEvents, setAllEvents] = useState<GEvent[] | string>([]);
   // useState<Event | undefined>(undefined);
-
+  const { fullUser } = useContext(UserContext);
+  
+  /// Booking related /////
+  
+  const [myEvents, setMyEvent] = useState<GEvent | undefined>(undefined);
+  
+  
+  /// Booking above ////
+  
   useEffect(() => {
     const fetchAllEvents = async (): Promise<GEvent[]> => {
       try {
@@ -35,10 +49,10 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         throw error;
       }
     };
-
+    
     fetchAllEvents()
-      .catch((error) => {
-        // Handle any errors that occurred during the fetchAllEvents() call
+    .catch((error) => {
+      // Handle any errors that occurred during the fetchAllEvents() call
         console.error("Error fetching events:", error);
         return []; // Return an empty array or handle the error accordingly
       })
@@ -50,13 +64,13 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 
   const [newEvent, setNewEvent] = useState<GEvent>({
-    eventHost: '',
-    eventDate: '',
-    bookingStatus: '',
+    eventHost: fullUser,
+    eventDate: new Date(),
+    bookingStatus: ''
   });
 
   return (
-    <EventContext.Provider value={{ allEvents, setAllEvents, newEvent, setNewEvent }}>
+    <EventContext.Provider value={{ allEvents, setAllEvents, newEvent, setNewEvent, eventHost: fullUser || '', eventDate: new Date() }}>
       {children}
     </EventContext.Provider>
   );

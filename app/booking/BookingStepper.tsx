@@ -18,7 +18,9 @@ export default function BookingStepper() {
 const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-
+function handleWalkThrough() {
+    
+}
 
 
     return (
