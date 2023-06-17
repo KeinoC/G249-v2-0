@@ -65,9 +65,12 @@ export default function MobileTabbedDashboard() {
     );
   });
 
+
+  const [activeTab, setActiveTab] = useState<string | null>('first');
+
   return (
     <div className="MobileTabbedDashboard-page">
-      <Tabs className="tab-container m-0 max-w-200"  defaultValue={selectedTab}>
+      <Tabs className="tab-container m-0 max-w-200" color="lime" radius="md" value={activeTab} onTabChange={setActiveTab}  defaultValue={selectedTab}>
         <Tabs.List className="tab-container m-0 flex overflow-none" grow>
           {renderTabs}
         </Tabs.List>
