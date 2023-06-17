@@ -19,8 +19,8 @@ export interface EventContextProps {
   eventDate: Date;
   allEvents: GEvent[] | string;
   setAllEvents: React.Dispatch<React.SetStateAction<GEvent[] | string>>;
-  newEvent: GEvent;
-  setNewEvent: React.Dispatch<React.SetStateAction<GEvent>>;
+  booking: GEvent;
+  setBooking: React.Dispatch<React.SetStateAction<GEvent>>;
 }
 
 export const EventContext = createContext<EventContextProps>({} as EventContextProps);
@@ -63,14 +63,14 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
 
-  const [newEvent, setNewEvent] = useState<GEvent>({
+  const [booking, setBooking] = useState<GEvent>({
     eventHost: fullUser,
     eventDate: new Date(),
     bookingStatus: ''
   });
 
   return (
-    <EventContext.Provider value={{ allEvents, setAllEvents, newEvent, setNewEvent, eventHost: fullUser || '', eventDate: new Date() }}>
+    <EventContext.Provider value={{ allEvents, setAllEvents, booking, setBooking, eventHost: fullUser || '', eventDate: new Date() }}>
       {children}
     </EventContext.Provider>
   );
