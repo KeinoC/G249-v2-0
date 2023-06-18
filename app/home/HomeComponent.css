@@ -8,7 +8,7 @@
     margin:0;
     padding:0;
     overflow: hidden;
-    background-color: var(--bgLightMode1);
+    background-color: var(--bg1);
 }
 
 .button-container {
@@ -27,7 +27,7 @@
 .big-button {
     width:30rem;
     height:20rem;
-    background-color: var(--bgLightMode2);
+    background-color: var(--accentLightMode1);
     margin: 3rem;
     border-radius: var(--borderRadius1);
     /* box-shadow: var(--boxShadowInset1); */

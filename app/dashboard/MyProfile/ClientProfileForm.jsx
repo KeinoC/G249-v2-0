@@ -30,17 +30,16 @@ export default function ClientProfileForm() {
         friend_since: user?.friend_since || "",
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         createUser(formData);
-        // refreshUser();
         updateUser(formData);
         setUser(formData);
         close();

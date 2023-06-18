@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { EventProvider } from "./EventProvider/EventContext";
 import { MiscProvider } from "./MiscProvider/MiscContext";

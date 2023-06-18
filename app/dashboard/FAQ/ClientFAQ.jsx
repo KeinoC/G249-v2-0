@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import { EventContext } from "../../Context/EventProvider/EventContext";
 import { MiscContext } from "../../Context/MiscProvider/MiscContext";

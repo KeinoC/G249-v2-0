@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getAllEvents } from '@/Firebase/endpoints/events';
 import { UserContext } from '../UserProvider/UserContext';
