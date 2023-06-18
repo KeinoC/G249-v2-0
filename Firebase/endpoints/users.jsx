@@ -1,17 +1,6 @@
 import { app, db } from "../firebase-config";
 import firebase from "firebase/app";
 
-interface User {
-    userId: string;
-    username?: string | null;
-    email?: string | null;
-    first_name: string;
-    last_name: string;
-    address: string;
-    profile_img: string;
-    friend_since: string;
-}
-
 // Throttle configuration
 const throttleConfig = {
     maxRequests: 1, // Maximum number of requests allowed within the time window
@@ -21,9 +10,8 @@ const throttleConfig = {
 };
 
 // Throttle function to check and manage request limits
-// Throttle function to check and manage request limits
 const throttleFunction = () =>
-    new Promise<void>((resolve) => {
+    new Promise((resolve) => {
         if (throttleConfig.pendingRequests >= throttleConfig.maxRequests) {
             // If the maximum limit is reached, wait for the time window to pass before processing the request
             setTimeout(() => {
@@ -38,7 +26,7 @@ const throttleFunction = () =>
         throttleConfig.pendingRequests++;
     });
 
-export const createUser = async (userData: User): Promise<string> => {
+export const createUser = async (userData) => {
     try {
         await throttleFunction(); // Throttle the function
 
@@ -52,9 +40,7 @@ export const createUser = async (userData: User): Promise<string> => {
     }
 };
 
-export const updateUser = async (
-    additionalData: Record<string, any>
-): Promise<void> => {
+export const updateUser = async (additionalData) => {
     try {
         await throttleFunction(); // Throttle the function
 
@@ -70,18 +56,15 @@ export const updateUser = async (
     }
 };
 
-export const getAllUsers = async (): Promise<User[]> => {
+export const getAllUsers = async () => {
     try {
         await throttleFunction(); // Throttle the function
 
         const snapshot = await db.collection("users").get();
-        const users: User[] = snapshot.docs.map(
-            (doc) =>
-                ({
-                    userId: doc.id,
-                    ...doc.data(),
-                } as User)
-        );
+        const users = snapshot.docs.map((doc) => ({
+            userId: doc.id,
+            ...doc.data(),
+        }));
         return users;
     } catch (error) {
         console.error("Error retrieving users:", error);
@@ -89,7 +72,7 @@ export const getAllUsers = async (): Promise<User[]> => {
     }
 };
 
-export const getUserById = async (userId: string): Promise<void> => {
+export const getUserById = async (userId) => {
     try {
         await throttleFunction(); // Throttle the function
 
@@ -110,7 +93,7 @@ export const getUserById = async (userId: string): Promise<void> => {
     }
 };
 
-export const deleteUserById = async (userId: string): Promise<void> => {
+export const deleteUserById = async (userId) => {
     try {
         await throttleFunction(); // Throttle the function
 

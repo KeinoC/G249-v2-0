@@ -1,14 +1,6 @@
 import { db } from "../firebase-config";
 
-
-interface Event {
-  id?: string;
-  eventHost: string;
-  eventDate: string;
-  bookingStatus: string;
-}
-
-export const createEvent = async (eventData: Event): Promise<string> => {
+export const createEvent = async (eventData) => {
   try {
     const docRef = await db.collection("events").add(eventData);
     console.log("Event created with ID:", docRef.id);
@@ -20,10 +12,7 @@ export const createEvent = async (eventData: Event): Promise<string> => {
   }
 };
 
-export const updateEvent = async (
-  eventId: string,
-  updatedData: Partial<Event>
-): Promise<void> => {
+export const updateEvent = async (eventId, updatedData) => {
   try {
     const eventRef = db.collection("events").doc(eventId);
     await eventRef.update(updatedData);
@@ -34,12 +23,10 @@ export const updateEvent = async (
   }
 };
 
-export const getAllEvents = async (): Promise<Event[]> => {
+export const getAllEvents = async () => {
   try {
     const snapshot = await db.collection("events").get();
-    const events: Event[] = snapshot.docs.map(
-      (doc) => ({ ...doc.data() } as Event)
-    );
+    const events = snapshot.docs.map((doc) => ({ ...doc.data() }));
     return events;
   } catch (error) {
     console.error("Error retrieving events:", error);
@@ -47,12 +34,12 @@ export const getAllEvents = async (): Promise<Event[]> => {
   }
 };
 
-export const getEventById = async (eventId: string): Promise<Event> => {
+export const getEventById = async (eventId) => {
   try {
     const eventRef = db.collection("events").doc(eventId);
     const doc = await eventRef.get();
     if (doc.exists) {
-      return { ...doc.data() } as Event;
+      return { ...doc.data() };
     } else {
       throw new Error("Event not found");
     }
@@ -62,7 +49,7 @@ export const getEventById = async (eventId: string): Promise<Event> => {
   }
 };
 
-export const deleteEvent = async (eventId: string): Promise<void> => {
+export const deleteEvent = async (eventId) => {
   try {
     const eventRef = db.collection("events").doc(eventId);
     await eventRef.delete();
@@ -72,5 +59,3 @@ export const deleteEvent = async (eventId: string): Promise<void> => {
     throw error;
   }
 };
-
-

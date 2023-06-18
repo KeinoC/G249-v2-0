@@ -1,7 +1,5 @@
-"use client";
-import React, { useContext, useState } from "react";
-import { EventContext } from "../../Context/EventProvider/EventContext";
-import { MiscContext } from "../../Context/MiscProvider/MiscContext";
+"user-client";
+import React from "react";
 import { Accordion } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import "./ClientFAQ.css";
@@ -22,10 +20,6 @@ const questions = [
 ];
 
 export default function ClientFAQ() {
-    const { allEvents }  = useContext(EventContext);
-    const { isMobile } = useContext(MiscContext);
-    const [active, setActive] = useState(1);
-
     const renderFAQ = questions.map((question, index) => {
         return (
             <Accordion.Item key={index} value={question.q}>

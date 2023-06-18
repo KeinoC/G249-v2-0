@@ -7,13 +7,7 @@ import ClientProfile from './MyProfile/ClientProfile';
 import ExploreTab from "./ExploreTab/ExploreTab"
 import "./MobileClientTab.css"
 
-interface TabComponent {
-  name: string;
-  value: string;
-  component: JSX.Element;
-}
-
-const tabComponents: TabComponent[] = [
+const tabComponents = [
   {
     name: "Explore",
     value: "explore",
@@ -42,9 +36,9 @@ const tabComponents: TabComponent[] = [
 ];
 
 export default function MobileTabbedDashboard() {
-  const [selectedTab, setSelectedTab] = useState<string>("events");
+  const [selectedTab, setSelectedTab] = useState("events");
 
-  function handleTabClick(tabValue: string) {
+  function handleTabClick(tabValue) {
     setSelectedTab(tabValue);
   }
 
@@ -55,7 +49,7 @@ export default function MobileTabbedDashboard() {
   const renderTabs = tabComponents.map((tab, index) => {
     return (
       <Tabs.Tab
-      className="tab-item inline m-0 text-blue-100"
+        className="tab-item inline m-0 text-blue-100"
         key={index}
         value={tab.value}
         onClick={() => handleTabClick(tab.value)}
@@ -65,8 +59,7 @@ export default function MobileTabbedDashboard() {
     );
   });
 
-
-  const [activeTab, setActiveTab] = useState<string | null>('first');
+  const [activeTab, setActiveTab] = useState('first');
 
   return (
     <div className="MobileTabbedDashboard-page text-blue-100">
@@ -76,7 +69,7 @@ export default function MobileTabbedDashboard() {
         </Tabs.List>
       </Tabs>
       <div className="tab-content-container inline m-0" >
-      {tabComponents.find(tab => tab.value === selectedTab)?.component}
+        {tabComponents.find(tab => tab.value === selectedTab)?.component}
       </div>
     </div>
   );
