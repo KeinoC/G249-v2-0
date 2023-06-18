@@ -13,11 +13,11 @@
 .homepage::before {
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     /* background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9093.jpg?w=900"); */
     background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9104.jpg?w=900");
     background-blend-mode: multiply;
-    filter: brightness(70%) contrast(120%) saturate(120%) grayscale();
+    /* filter: brightness(70%) contrast(120%) saturate(120%) grayscale(); */
 }
 
 .button-container {
@@ -147,13 +147,14 @@
     color: var(--c6);
 }
 
-.homepage {
-    /* padding-top:2dvh; */
-    text-align: center;
-    align-content: center;
-    width: 100dvw;
-    margin-top: 0%;
-    height:100dvh;
+.homepage::before {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgb(255, 255, 255);
+    /* background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9093.jpg?w=900"); */
+    background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9104.jpg?w=900");
+    background-blend-mode: multiply;
+    filter: brightness(70%) contrast(120%) saturate(120%) grayscale();
 }
 
 

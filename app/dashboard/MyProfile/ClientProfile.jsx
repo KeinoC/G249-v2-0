@@ -1,11 +1,9 @@
 "use client";
 import React, { useContext, useState } from "react";
-import ClientSideBar from "../ClientSideBar"
 import ProfileSummary from "./ProfileSummary"
 import { EventContext } from "../../Context/EventProvider/EventContext";
 import { MiscContext } from "../../Context/MiscProvider/MiscContext"
 import NavBar from "../../home/NavBar"
-import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
 import ClientProfileForm from "./ClientProfileForm"
 import { UserContext } from "../../Context/UserProvider/UserContext"

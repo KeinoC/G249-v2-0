@@ -1,11 +1,9 @@
 "use client";
 import React, { useContext, useImperativeHandle, useState } from "react";
-import ClientSideBar from "../ClientSideBar";
 import { EventContext } from "../../Context/EventProvider/EventContext";
 import { MiscContext } from "../../Context/MiscProvider/MiscContext";
 import { UserContext } from "../../Context/UserProvider/UserContext";
 import NavBar from "../../home/NavBar";
-import MobileClientSideBar from "../MobileClientSideBar";
 import MobileTabbedDashboard from "../MobileTabbedDashboard";
 import Image from "next/image";
 

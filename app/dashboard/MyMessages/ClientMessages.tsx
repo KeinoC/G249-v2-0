@@ -1,10 +1,8 @@
 "use client";
 import React, { useContext, useState } from "react";
-import ClientSideBar from "../ClientSideBar"
 import { EventContext } from "../../Context/EventProvider/EventContext";
 import { MiscContext } from "../../Context/MiscProvider/MiscContext"
 import NavBar from "../../home/NavBar"
-import MobileClientSideBar from "../MobileClientSideBar"
 import MobileTabbedDashboard from "../MobileTabbedDashboard"
 
 export default function ClientMessages() {
@@ -12,7 +10,6 @@ export default function ClientMessages() {
 
 
 
-    // {/* {isMobile ? <MobileClientSideBar /> : <ClientSideBar />} */}
 
 
     return (
