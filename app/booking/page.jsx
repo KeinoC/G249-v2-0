@@ -9,8 +9,7 @@ import Progress from "./RingProgress";
 import BookingStepper from "./BookingStepper";
 
 export default function BookingPage() {
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
+    const { allEvents }  = useContext(EventContext);
     const { isMobile } = useContext(MiscContext);
     const [active, setActive] = useState(1);
 

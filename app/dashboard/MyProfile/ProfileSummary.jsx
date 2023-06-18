@@ -11,9 +11,9 @@ import Image from "next/image";
 
 export default function ProfileSummary() {
     // Imports States along with types from state manager (AppProvider)
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
+    const { allEvents }  = useContext(EventContext);
     const { isMobile } = useContext(MiscContext);
+    const [active, setActive] = useState(1);
     const { user, fullUser } = useContext(UserContext);
 
     return (

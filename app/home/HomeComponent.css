@@ -170,7 +170,7 @@
     background: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9093.jpg?w=900");
     background-size: auto 200%;
     background-clip: text;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 80s linear infinite;

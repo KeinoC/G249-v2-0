@@ -5,8 +5,9 @@ import { EventContext } from "../Context/EventProvider/EventContext";
 
 export default function Events() {
     // Imports States along with types from state manager (AppProvider)
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
+    const { allEvents }  = useContext(EventContext);
+    const { isMobile } = useContext(MiscContext);
+    const [active, setActive] = useState(1);
 
     console.log(allEvents);
 

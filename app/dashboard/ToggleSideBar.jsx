@@ -8,11 +8,7 @@ import MobileClientSideBar from "./MobileClientSideBar"
 
 export default function Dashboard() {
     // Imports States along with types from state manager (AppProvider)
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
-    const { isMobile }= useContext(MiscContext);
 
-    console.log(isMobile);
 
 
 
@@ -20,7 +16,7 @@ export default function Dashboard() {
     return (
         <div>
             <NavBar />
-            {isMobile ? <MobileClientSideBar /> : <ClientSideBar />}
-        </div>
+           <MobileClientSideBar /> 
+           </div>
     );
 }

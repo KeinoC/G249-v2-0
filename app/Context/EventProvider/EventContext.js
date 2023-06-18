@@ -38,7 +38,7 @@ export const EventProvider = ({ children }) => {
 
   return (
     <EventContext.Provider
-      value={{ allEvents, setAllEvents, booking, setBooking, eventHost: fullUser, eventDate: new Date() }}
+      value={{ allEvents, setAllEvents, booking, setBooking, fullUser}}
     >
       {children}
     </EventContext.Provider>

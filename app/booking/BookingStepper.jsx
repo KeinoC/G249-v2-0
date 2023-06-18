@@ -8,8 +8,7 @@ import { Stepper, Button, Group } from "@mantine/core";
 import Progress from "./RingProgress";
 
 export default function BookingStepper() {
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
+    const { allEvents }  = useContext(EventContext);
     const { isMobile } = useContext(MiscContext);
     const [active, setActive] = useState(1);
 

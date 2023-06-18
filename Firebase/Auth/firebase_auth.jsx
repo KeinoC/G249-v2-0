@@ -3,7 +3,7 @@ import { app, googleProvider, facebookProvider } from '../firebase-config';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const Signup: React.FC = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,17 +12,17 @@ const Signup: React.FC = () => {
       await app.auth().createUserWithEmailAndPassword(email, password);
       // Signup successful
     } catch (error) {
-      console.log((error as firebase.auth.Error).message);
+      console.log(error.message);
       // Handle signup error
     }
   };
 
-  const handleSocialSignup = async (provider: firebase.auth.AuthProvider) => {
+  const handleSocialSignup = async (provider) => {
     try {
       await app.auth().signInWithPopup(provider);
       // Social signup successful
     } catch (error) {
-      console.log((error as firebase.auth.Error).message);
+      console.log(error.message);
       // Handle social signup error
     }
   };
@@ -39,7 +39,7 @@ const Signup: React.FC = () => {
   );
 };
 
-const Login: React.FC = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -48,17 +48,17 @@ const Login: React.FC = () => {
       await app.auth().signInWithEmailAndPassword(email, password);
       // Login successful
     } catch (error) {
-      console.log((error as firebase.auth.Error).message);
+      console.log(error.message);
       // Handle login error
     }
   };
 
-  const handleSocialLogin = async (provider: firebase.auth.AuthProvider) => {
+  const handleSocialLogin = async (provider) => {
     try {
       await app.auth().signInWithPopup(provider);
       // Social login successful
     } catch (error) {
-      console.log((error as firebase.auth.Error).message);
+      console.log(error.message);
       // Handle social login error
     }
   };
@@ -76,15 +76,3 @@ const Login: React.FC = () => {
 };
 
 export { Signup, Login };
-
-
-    //     {
-    //     userId: "1",
-    //     username: "keinoc",
-    //     first_name: "Keino",
-    //     last_name: "Chichester",
-    //     address: "Brooklyn, New York",
-    //     profile_img:
-    //         "https://i.pinimg.com/564x/75/e1/73/75e173eb37b5d047c9476ccc49cacf5b.jpg",
-    //     friend_since: "Dec, 2018",
-    // }

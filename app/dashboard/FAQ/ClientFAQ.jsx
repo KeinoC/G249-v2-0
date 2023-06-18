@@ -22,8 +22,9 @@ const questions = [
 ];
 
 export default function ClientFAQ() {
-    const EventListing = useContext(EventContext);
+    const { allEvents }  = useContext(EventContext);
     const { isMobile } = useContext(MiscContext);
+    const [active, setActive] = useState(1);
 
     const renderFAQ = questions.map((question, index) => {
         return (

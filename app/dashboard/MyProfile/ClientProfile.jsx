@@ -12,9 +12,9 @@ import { UserContext } from "../../Context/UserProvider/UserContext"
 
 export default function ClientProfile() {
     // Imports States along with types from state manager (AppProvider)
-    const EventListing = useContext(EventContext);
-    const { allEvents } = EventListing || {};
-    const { isMobile }= useContext(MiscContext);
+    const { allEvents }  = useContext(EventContext);
+    const { isMobile } = useContext(MiscContext);
+    const [active, setActive] = useState(1);
 
 
 
