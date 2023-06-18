@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { EventContext, GEvent } from "../Context/EventProvider/EventContext";
+import { EventContext } from "../Context/EventProvider/EventContext";
 import { TextInput, Checkbox, Button, Group, Box, Select } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import { createEvent } from "../../Firebase/endpoints/events";
 
 export default function NewEventForm() {
