@@ -1,23 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export interface MediaContextProps {
-    slideImages: {
-        url: string;
-        tags: string[];
-        name: string;
-    }[];
-}
-
-export const MediaContext = createContext<MediaContextProps>(
-    {} as MediaContextProps
-);
-
-export const MediaProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
-    const [slideImages, setSlideImages] = useState<
-        MediaContextProps["slideImages"]
-    >([
+export const MediaContext = createContext({});
+export const MediaProvider = ({ children }) => {
+    const [slideImages, setSlideImages] = useState([
         {
             url: "https://lh3.googleusercontent.com/pw/AJFCJaXixn0y4cpT_Dln6no6rwxU6zqi54WwAFIjMskesBjToULRaTGkEEVhaiXX73SEIbGob5LNN1MM97CUgoTytO7rKqCemyp1s-HUYBQ_7m1zBkIJYzSbzr0jbVf3UDxzPGRNlJY1yoKGfE7Cp41LpYEkWw=w1252-h1668-s-no?authuser=0",
             tags: ["indoors", "empty"],

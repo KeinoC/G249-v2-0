@@ -1,12 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-export interface MiscContextProps {
-  isMobile: boolean;
-}
-
-export const MiscContext = createContext<MiscContextProps>({} as MiscContextProps);
-
-export const MiscProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MiscContext = createContext({});
+export const MiscProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

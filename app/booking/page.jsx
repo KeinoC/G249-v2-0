@@ -9,23 +9,17 @@ import Progress from "./RingProgress";
 import BookingStepper from "./BookingStepper";
 
 export default function BookingPage() {
-    // Imports States along with types from state manager (AppProvider)
     const EventListing = useContext(EventContext);
     const { allEvents } = EventListing || {};
     const { isMobile } = useContext(MiscContext);
     const [active, setActive] = useState(1);
 
-
-
-
-
     return (
         <div className="h-screen">
             <NavBar />
-<div className="flex flex-row">
-<BookingStepper />
-</div>
-
+            <div className="flex flex-row">
+                <BookingStepper />
+            </div>
         </div>
     );
 }
