@@ -16,12 +16,13 @@
   --bgLightMode1: rgb(216, 252, 246);
   --bgLightMode2: rgb(183, 254, 243);
   --accentLightMode1: rgb(255, 200, 0);
-  --bg1: rgb(253, 185, 5);
+  --yellow1: rgb(253, 185, 5);
+  --dark1: rgb(43, 47, 47);
 }
 
 
 body, html {
-  background-color: var(--bg1);
+  background-color: var(--dark1);
 }
 
 @media (prefers-color-scheme: dark) {
