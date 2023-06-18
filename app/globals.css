@@ -1,6 +1,6 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -23,7 +23,6 @@
 
 body, html {
   background-color: var(--dark1);
-  width: 100vw;
 }
 
 @media (prefers-color-scheme: dark) {
