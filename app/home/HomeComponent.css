@@ -1,16 +1,23 @@
 .home-page {
     display: flex;
-
     height: 95vh;
     width: 100vw;
+    overflow: hidden;
     margin:0;
     padding:0;
     overflow: hidden;
+    position: relative;
+
+}
+
+.homepage::before {
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: var(dark1);
+    background-color: rgb(255, 255, 255);
     /* background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9093.jpg?w=900"); */
     background-image: url("https://img.freepik.com/premium-photo/tropical-leaves-gold-blackllustration-black-gold-tree-leaf_372999-9104.jpg?w=900");
+    background-blend-mode: multiply;
+    filter: brightness(70%) contrast(120%) saturate(120%) grayscale();
 }
 
 .button-container {
@@ -24,7 +31,7 @@
 .big-button {
     width:30rem;
     height:20rem;
-    background-color: var(--accentLightMode1);
+    background-color: var(--yellow1);
     margin: 3rem;
     border-radius: var(--borderRadius1);
     /* box-shadow: var(--boxShadowInset1); */
@@ -41,10 +48,6 @@
 @media screen and (min-width: 300px) and (max-width: 950px) {
 
 
-    .garden {
-        font-size: 4rem;
-    }
-
     .g249-container {
         flex-direction: row;
     }
@@ -56,8 +59,8 @@
         top: 32vh;
         left: 55vw;
         z-index: 5;
-        color: white
-        
+        color: white;
+        font-size: 10rem;
     }
 
     .n2, .n4, .n9 {
@@ -66,26 +69,27 @@
     }
 
     .n2{
-        top: -10vh;
+        top: -9vh;
         color: var(--yellow1) ;
     }
 .n4{
-    top: 1vh;
+    top: 0vh;
     color: var(--yellow1) ;
 }
     .n9 {
         position: absolute;
-        top:12vh;
+        top:10vh;
         color: var(--yellow1) ;
 
     }
     .G{
         font-family: 'Brush Script MT', cursive;
         position: absolute;
-        right: 50vw;
-        top: 15vh;
+        right: 42vw;
+        top: 20vh;
         color: var(--yellow1);
-        text-shadow: var(--boxShadow3), var(--boxShadow1);
+        text-shadow: var(--boxShadow3), var(--boxShadow1), var(--boxShadow1);
+        font-size: 20rem;
     }
 
 
@@ -153,7 +157,7 @@
 }
 
 
-.putGhere{
+.G0{
     
     /* margin-top:25dvh; */
     /* min-width:100dvw; */

@@ -20,8 +20,8 @@ const HomeComponent = () => {
     };
 
     return (
-        <div className="home-page fixed">
-<div className="g249-container flex flex-column w-screen h-screen">
+        <div className="home-page">
+<div className="g249-container">
   <div className="G-div">
     <div className="G text-10xl">G</div>
   </div>
