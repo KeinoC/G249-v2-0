@@ -4,10 +4,12 @@
     width: 100vw;
     align-content: center;
     justify-content: center;
+    color: var(--mediumText);
 }
 
 .tab-container {
     width: 100vw;
+    color: var(--mediumText);
 }
 
 .tab-content-container {
@@ -15,4 +17,5 @@
     flex-direction: column;
     width: 100vw;
     font-size: 3rem;
+    color: var(--mediumText);
 }

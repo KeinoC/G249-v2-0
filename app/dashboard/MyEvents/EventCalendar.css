@@ -1,10 +1,12 @@
 .mantine-Calendar-calendar {
 padding:0;
+color: var(--mediumText);
 
 }
 
 .mantine-Calendar-calendarHeader {
     align-self: center;
+    color: var(--mediumText);
 }
 
 
@@ -13,4 +15,5 @@ padding:0;
     width: 12vw;
     margin: 0;
     padding:0;
+    color: var(--mediumText);
 }

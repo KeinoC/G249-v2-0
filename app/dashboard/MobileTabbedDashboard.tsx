@@ -55,7 +55,7 @@ export default function MobileTabbedDashboard() {
   const renderTabs = tabComponents.map((tab, index) => {
     return (
       <Tabs.Tab
-      className="tab-item inline m-0"
+      className="tab-item inline m-0 text-blue-100"
         key={index}
         value={tab.value}
         onClick={() => handleTabClick(tab.value)}
@@ -69,9 +69,9 @@ export default function MobileTabbedDashboard() {
   const [activeTab, setActiveTab] = useState<string | null>('first');
 
   return (
-    <div className="MobileTabbedDashboard-page">
-      <Tabs className="tab-container m-0 max-w-200" color="lime" radius="md" value={activeTab} onTabChange={setActiveTab}  defaultValue={selectedTab}>
-        <Tabs.List className="tab-container m-0 flex overflow-none" grow>
+    <div className="MobileTabbedDashboard-page text-blue-100">
+      <Tabs className="tab-container m-0 max-w-200 text-blue-100" color="lime" radius="md" value={activeTab} onTabChange={setActiveTab}  defaultValue={selectedTab}>
+        <Tabs.List className="tab-container m-0 flex overflow-none text-blue-100" grow>
           {renderTabs}
         </Tabs.List>
       </Tabs>
