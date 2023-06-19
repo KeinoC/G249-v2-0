@@ -30,7 +30,7 @@ export default function Login() {
     } = useContext(UserContext);
 
     return (
-        <div>
+        <div className="login-page">
             <NavBar />
             <div className="flex flex-col justify-around">
                 {showLoginForm ? <LoginForm /> : <Signup />}

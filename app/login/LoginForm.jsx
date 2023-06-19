@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
 import { Button } from "@mantine/core";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
+import "./Login.css"
 
 const CustomButton = ({ onClick, children }) => {
     return <Button onClick={onClick}>{children}</Button>;
