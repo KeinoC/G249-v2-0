@@ -1,9 +1,9 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
-import LoginForm from "./LoginForm"
-import Signup from "./Signup"
-import NavBar from "../home/NavBar"
+import LoginForm from "./LoginForm";
+import Signup from "./Signup";
+import NavBar from "../home/NavBar";
 
 export default function Login() {
     const {
@@ -24,8 +24,8 @@ export default function Login() {
     return (
         <div>
             <NavBar />
-<LoginForm />
-<Signup />
+            <LoginForm />
+            <Signup />
         </div>
     );
 }

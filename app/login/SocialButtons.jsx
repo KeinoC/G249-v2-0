@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import React from "react";
-import { Button, ButtonProps, Group } from "@mantine/core";
+import { Button, Group } from "@mantine/core";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
 
-export function GoogleButton(props: ButtonProps) {
+export function GoogleButton(props) {
     return (
         <Button
             leftIcon={<AiFillGoogleSquare />}
@@ -16,7 +16,7 @@ export function GoogleButton(props: ButtonProps) {
     );
 }
 
-export function FacebookButton(props: ButtonProps) {
+export function FacebookButton(props) {
     return (
         <Button
             leftIcon={<AiFillFacebook />}

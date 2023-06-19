@@ -1,18 +1,9 @@
-"use client";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserProvider/UserContext";
-import { Button, ButtonProps, Group } from "@mantine/core";
+import { Button, Group } from "@mantine/core";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
 
-interface CustomButtonProps {
-    onClick: () => Promise<void>;
-    children: React.ReactNode;
-}
-
-const CustomGoogleButton: React.FC<CustomButtonProps> = ({
-    onClick,
-    children,
-}) => {
+const CustomGoogleButton = ({ onClick, children }) => {
     return (
         <Button onClick={onClick}>
             <AiFillGoogleSquare />
@@ -21,10 +12,7 @@ const CustomGoogleButton: React.FC<CustomButtonProps> = ({
     );
 };
 
-const CustomFacebookButton: React.FC<CustomButtonProps> = ({
-    onClick,
-    children,
-}) => {
+const CustomFacebookButton = ({ onClick, children }) => {
     return (
         <Button onClick={onClick}>
             <AiFillFacebook />
@@ -67,7 +55,7 @@ export default function Signup() {
                 />
                 <button onClick={handleSignup}>Signup with Email</button>
                 {/* <button onClick={() => handleSocialSignup(googleProvider)}>Signup with Google</button>
-          <button onClick={() => handleSocialSignup(facebookProvider)}>Signup with Facebook</button> */}
+        <button onClick={() => handleSocialSignup(facebookProvider)}>Signup with Facebook</button> */}
             </form>
         </div>
     );
