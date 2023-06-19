@@ -12,6 +12,8 @@ export const EventProvider = ({ children }) => {
     eventHost: fullUser,
     eventDate: new Date(),
     bookingStatus: '',
+    needsWalkthrough: false,
+    walkthroughDate: "",
   });
 
   useEffect(() => {

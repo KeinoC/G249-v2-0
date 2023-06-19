@@ -19,6 +19,11 @@ export const MiscProvider = ({ children }) => {
     };
   }, []);
 
+
+
+
+
+
   return (
     <MiscContext.Provider value={{ isMobile }}>
       {children}

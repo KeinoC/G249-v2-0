@@ -4,7 +4,7 @@ import { EventContext } from "../Context/EventProvider/EventContext";
 import { MiscContext } from "../Context/MiscProvider/MiscContext";
 import NavBar from "../home/NavBar";
 import EventCalendar from "../dashboard/MyEvents/EventCalendar";
-import { Stepper, Button, Group } from "@mantine/core";
+import { Stepper, Button, Group, Divider } from "@mantine/core";
 import Progress from "./RingProgress";
 
 export default function BookingStepper() {
@@ -21,6 +21,7 @@ export default function BookingStepper() {
 
     return (
         <div className="flex flex-col">
+            <Divider my="sm" />
             <Stepper className="text-sm" active={active} onStepClick={setActive} breakpoint="sm">
                 <Stepper.Step label="First step" description="Create an account">
                     <EventCalendar />

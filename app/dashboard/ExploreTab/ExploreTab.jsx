@@ -1,4 +1,3 @@
-/* eslint-disable react/no-string-refs */
 "use client";
 import React, { useContext, useState } from "react";
 import { EventContext } from "../../Context/EventProvider/EventContext";
