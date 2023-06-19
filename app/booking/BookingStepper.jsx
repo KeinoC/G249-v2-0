@@ -25,8 +25,8 @@ export default function BookingStepper() {
             </Group>
             <Divider my="sm" />
 
-            <Stepper className="text-sm flex flex-col h-[75vh] w-screen px-5" active={active} onStepClick={setActive} breakpoint="sm">
-                <Stepper.Step label="Walkthrough" description="Toggle to schedule walkthrough">
+            <Stepper className="text-sm flex flex-col h-[80vh] w-screen px-5" active={active} onStepClick={setActive} breakpoint="sm">
+                <Stepper.Step label="Walkthrough" description="Schedule walkthrough">
                 <Divider my="sm" label="Schedule Walkthrough" labelPosition="center" />
                     <WalkthroughForm />
                 </Stepper.Step>

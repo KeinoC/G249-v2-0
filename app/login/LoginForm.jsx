@@ -26,26 +26,28 @@ export default function LoginForm() {
     } = useContext(UserContext);
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div className="flex flex-col justify-center">
+            <h1 className="text-white self-center">Login</h1>
 
-            <form onSubmit={handleLogin}>
+            <form className="flex flex-col" onSubmit={handleLogin}>
                 <input
+                className="h-10 mx-20 my-5 flex p-5 rounded"
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
+                className="h-10 mx-20 my-5 flex p-5 rounded"
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <Button className="bg-black" onClick={handleLogin}>
+                <Button className="bg-black mx-20 my-5" onClick={handleLogin}>
                     Login with Email
                 </Button>
-                <Button className="bg-black" onClick={handleLogout}>
+                <Button className="bg-black mx-20 my-5" onClick={handleLogout}>
                     Logout
                 </Button>
             </form>
