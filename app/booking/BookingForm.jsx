@@ -1,49 +1,77 @@
-"use client";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { EventContext } from "../Context/EventProvider/EventContext";
-import { MiscContext } from "../Context/MiscProvider/MiscContext";
-import NavBar from "../home/NavBar";
-import EventCalendar from "../dashboard/MyEvents/EventCalendar";
-import { Stepper, Button, Group, Divider } from "@mantine/core";
-import Progress from "./RingProgress";
+import { TextInput, Checkbox, Button, Group, Box, Select } from "@mantine/core";
+import { createEvent } from "../../Firebase/endpoints/events";
 
-export default function BookingStepper() {
-    const { allEvents } = useContext(EventContext);
-    const { isMobile } = useContext(MiscContext);
-    const [active, setActive] = useState(1);
+export default function NewEventForm() {
+    const NewBooking = useContext(EventContext);
+    const { booking, setBooking } = NewBooking || {};
 
-    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        const inputName = e.target.name;
 
-    function handleWalkThrough() {
-        // Handle walk through
-    }
+        setBooking((prevEvent) => ({
+            ...prevEvent,
+            [inputName]: inputValue,
+        }));
+    };
+
+    const handleSelectionChange = (value) => {
+        setBooking((prevEvent) => ({
+            ...prevEvent,
+            ["bookingStatus"]: value,
+        }));
+    };
+
+    const handleSubmitBooking = (e) => {
+        e.preventDefault();
+
+        if (booking.eventHost && booking.eventDate && booking.bookingStatus) {
+            createEvent(booking);
+            setBooking({
+                eventHost: "",
+                eventDate: "",
+                bookingStatus: "",
+            });
+        } else {
+            console.log("Please fill in all required fields");
+        }
+    };
 
     return (
-        <div className="flex flex-col">
-            <Divider my="sm" />
-            <Stepper className="text-sm" active={active} onStepClick={setActive} breakpoint="sm">
-                <Stepper.Step label="First step" description="Create an account">
-                    <EventCalendar />
-                    Step 1 content: Create an account
-                </Stepper.Step>
-                <Stepper.Step label="Second step" description="Verify email">
-                    Step 2 content: Verify email
-                </Stepper.Step>
-                <Stepper.Step label="Final step" description="Get full access">
-                    Step 3 content: Get full access
-                </Stepper.Step>
-                <Stepper.Completed>
-                    Completed, click back button to get to previous step
-                </Stepper.Completed>
-            </Stepper>
+        <Box maw={300} mx="auto">
+            <form onSubmit={handleSubmitBooking}>
+                <Select
+                    onChange={handleSelectionChange}
+                    value={booking ? booking.bookingStatus : ""}
+                    name="bookingStatus"
+                    placeholder="Enter booking status"
+                    data={[
+                        { value: "Inquiry", label: "Inquiry" },
+                        { value: "Pending", label: "Pending" },
+                        { value: "Contract", label: "Contract" },
+                    ]}
+                />
 
-            <Group className="items-end" position="center" mt="xl">
-                <Button variant="default" onClick={prevStep}>
-                    Back
-                </Button>
-                <Button onClick={nextStep}>Next step</Button>
-            </Group>
-        </div>
+                <TextInput
+                    name="eventHost"
+                    value={booking?.eventHost?.email ?? ""}
+                    type="text"
+                    placeholder="Host's full name"
+                    onChange={handleInputChange}
+                />
+                <TextInput
+                    name="eventDate"
+                    value={booking?.eventDate?.toString().split("T")[0] ?? ""}
+                    type="date"
+                    placeholder="Event Date"
+                    onChange={handleInputChange}
+                />
+                <Group position="right" mt="md">
+                    <Button type="submit">Submit</Button>
+                </Group>
+            </form>
+        </Box>
     );
 }

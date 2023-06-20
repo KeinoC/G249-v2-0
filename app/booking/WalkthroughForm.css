@@ -1,0 +1,9 @@
+.mantine-Switch-label {
+    font-size: 13px; 
+    color: var(--mediumText);
+}
+
+.mantine-DateTimePicker-label {
+    font-size: 13px; 
+    color: var(--mediumText);
+}

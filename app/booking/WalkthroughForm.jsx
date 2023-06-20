@@ -5,7 +5,8 @@ import { MiscContext } from "../Context/MiscProvider/MiscContext";
 import NavBar from "../home/NavBar";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { Switch, Group, Divider } from "@mantine/core";
-import { DateInput } from "@mantine/dates";
+import { DateTimePicker } from "@mantine/dates";
+import "./WalkthroughForm.css"
 
 export default function WalkthroughForm() {
     const { booking, setBooking } = useContext(EventContext);
@@ -28,28 +29,33 @@ export default function WalkthroughForm() {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
             <Switch
-            className="switch"
+            className="switch my-5 flex justify-center"
                 checked={booking.needsWalkthrough}
                 onLabel="Yes"
                 offLabel="No"
                 size="lg"
-                color="teal"
+                color="yellow"
                 onChange={()=>handleWalkthroughToggle()}
-                label="I would like to schedule a walkthrough"
+                label="Would you like to schedule a walkthrough?"
                 labelPosition="left"
             />
 
             {booking.needsWalkthrough && (
-                <DateInput
-                className="date-input"
+                <DateTimePicker
+                className="date-input text-yellow-600 my-5 justify-center"
+                color="yellow"
                     value={value}
                     onChange={handleDateChange}
-                    label="Date input"
-                    placeholder="Date input"
+                    label="Pick date and time"
+                    placeholder="Pick date and time"
                     maw={400}
+                    valueFormat="MMM D, YYYY hh:mm A"
                     mx="auto"
+                    withAsterisk
+                    dropdownType="modal"
+                    
                 />
             )}
         </div>
