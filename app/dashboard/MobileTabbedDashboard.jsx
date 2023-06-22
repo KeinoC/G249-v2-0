@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs } from '@mantine/core';
 import ClientEvents from './MyEvents/ClientEvents';
 import ClientFAQ from './FAQ/ClientFAQ';
-import ClientMessages from './MyMessages/ClientMessages';
+// import ClientMessages from './MyMessages/ClientMessages';
 import ClientProfile from './MyProfile/ClientProfile';
 import ExploreTab from "./ExploreTab/ExploreTab"
 import "./MobileClientTab.css"

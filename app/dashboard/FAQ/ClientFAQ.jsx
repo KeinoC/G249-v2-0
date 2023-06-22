@@ -22,10 +22,12 @@ const questions = [
 export default function ClientFAQ() {
     const renderFAQ = questions.map((question, index) => {
         return (
+            <>
             <Accordion.Item key={index} value={question.q}>
                 <Accordion.Control>{question.q}</Accordion.Control>
                 <Accordion.Content>{question.a}</Accordion.Content>
             </Accordion.Item>
+            </>
         );
     });
 
