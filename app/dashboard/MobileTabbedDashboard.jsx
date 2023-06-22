@@ -36,7 +36,7 @@ const tabComponents = [
 ];
 
 export default function MobileTabbedDashboard() {
-  const [selectedTab, setSelectedTab] = useState("events");
+  const [selectedTab, setSelectedTab] = useState("profile");
 
   function handleTabClick(tabValue) {
     setSelectedTab(tabValue);
