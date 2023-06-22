@@ -23,11 +23,11 @@ const tabComponents = [
     value: "faq",
     component: <ClientFAQ />,
   },
-  {
-    name: "Messages",
-    value: "messages",
-    component: <ClientMessages />,
-  },
+  // {
+  //   name: "Messages",
+  //   value: "messages",
+  //   component: <ClientMessages />,
+  // },
   {
     name: "Profile",
     value: "profile",
