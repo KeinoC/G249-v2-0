@@ -42,9 +42,6 @@ export default function MobileTabbedDashboard() {
     setSelectedTab(tabValue);
   }
 
-  useEffect(() => {
-    // Perform any side effects based on the selectedTab value
-  }, [selectedTab]);
 
   const renderTabs = tabComponents.map((tab, index) => {
     return (
