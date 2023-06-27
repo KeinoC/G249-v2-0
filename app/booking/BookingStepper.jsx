@@ -45,7 +45,7 @@ export default function BookingStepper() {
                 
                 <Stepper.Step className="text-yellow-600" label="Overview" description="Confirm details of your inquiry before submitting">
                 </Stepper.Step>
-
+<h4>Overview</h4>
                 <Stepper.Completed>
                     Completed, click back button to get to previous step
                 </Stepper.Completed>
