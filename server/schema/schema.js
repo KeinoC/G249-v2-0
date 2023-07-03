@@ -1,9 +1,10 @@
 const graphql = require("graphql");
 const _ = require("lodash");
+const Event = require("../models/event")
+const Client = require("../models/client")
+
 
 // ToDo: - Convert String date type to GraphQLDate
-
-
 
 // graphql variables
 const {
@@ -13,7 +14,7 @@ const {
     GraphQLID,
     GraphQLInt,
     GraphQLDate,
-    GraphQLList
+    GraphQLList,
 } = require("graphql");
 
 // Dummy data
@@ -21,16 +22,15 @@ const {
 const clients = [
     { id: "1", name: "Quan Jackson", eventId: "1" },
     { id: "2", name: "Shantel Nubian", eventId: "2" },
-    { id: "3", name: "Femi Brown", eventId: "3"},
+    { id: "3", name: "Femi Brown", eventId: "3" },
 ];
 
 const events = [
-  { id: "1", type: "birthday Party",  date: "9/1/2023", clientId: "1" },
-  { id: "2", type: "wedding", date:  "9/2/2023", clientId: "2"},
-  { id: "3", type: "graduation", date: "9/3/2023", clientId: "3"},
-  { id: "4", type: "baby shower", date: "9/4/2023", clientId: "3"},
+    { id: "1", type: "birthday Party", date: "9/1/2023", clientId: "1" },
+    { id: "2", type: "wedding", date: "9/2/2023", clientId: "2" },
+    { id: "3", type: "graduation", date: "9/3/2023", clientId: "3" },
+    { id: "4", type: "baby shower", date: "9/4/2023", clientId: "3" },
 ];
-
 
 // Types
 
@@ -40,11 +40,11 @@ const ClientType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         events: {
-          type: new GraphQLList(EventType),
-          resolve(parent, args) {
-            return _.filter(events,{clientId: parent.id} )
-          }
-        }
+            type: new GraphQLList(EventType),
+            resolve(parent, args) {
+                // return _.filter(events, { clientId: parent.id });
+            },
+        },
     }),
 });
 
@@ -67,7 +67,7 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
                 // code to get data from db / other source
-                return _.find(clients, { id: args.id });
+                // return _.find(clients, { id: args.id });
             },
         },
         event: {
@@ -75,7 +75,19 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
                 // code to get data from db / other source
-                return _.find(events, { id: args.id });
+                // return _.find(events, { id: args.id });
+            },
+        },
+        clients: {
+            type: new GraphQLList(ClientType),
+            resolve(parent, args) {
+                // return clients;
+            },
+        },
+        events: {
+            type: new GraphQLList(EventType),
+            resolve(parent, args) {
+                // return events;
             },
         },
     },
