@@ -1,8 +1,7 @@
 const graphql = require("graphql");
 const _ = require("lodash");
-const Event = require("../models/event")
-const Client = require("../models/client")
-
+const Event = require("../models/event");
+const Client = require("../models/client");
 
 // ToDo: - Convert String date type to GraphQLDate
 
@@ -93,4 +92,24 @@ const RootQuery = new GraphQLObjectType({
     },
 });
 
-module.exports = new GraphQLSchema({ query: RootQuery });
+// Mutations
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addClient: {
+      type: ClientType,
+      args: {
+        name: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        let client = new Client({
+          name: args.name,
+        });
+        return client.save();
+      },
+    },
+  },
+});
+
+module.exports = new GraphQLSchema({ query: RootQuery, mutation: Mutation });
