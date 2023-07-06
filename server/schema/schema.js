@@ -14,6 +14,7 @@ const {
     GraphQLInt,
     GraphQLDate,
     GraphQLList,
+    GraphQLNonNull
 } = require("graphql");
 
 // Dummy data
@@ -41,7 +42,7 @@ const ClientType = new GraphQLObjectType({
         events: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {
-                // return _.filter(events, { clientId: parent.id });
+                return Event.find({ clientId: parent.id});
             },
         },
     }),
@@ -53,6 +54,13 @@ const EventType = new GraphQLObjectType({
         id: { type: GraphQLID },
         date: { type: GraphQLString },
         type: { type: GraphQLString },
+        clientId: { type: GraphQLID},
+        client: {
+          type: ClientType,
+          resolve(parent, args) {
+            return Client.findById(parent.clientId)
+          }
+        }
     }),
 });
 
@@ -67,6 +75,7 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 // code to get data from db / other source
                 // return _.find(clients, { id: args.id });
+                return Event.findById(args.id);
             },
         },
         event: {
@@ -75,18 +84,21 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 // code to get data from db / other source
                 // return _.find(events, { id: args.id });
+                return Client.findById(args.id)
             },
         },
         clients: {
             type: new GraphQLList(ClientType),
             resolve(parent, args) {
                 // return clients;
+                return Client.find({})
             },
         },
         events: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {
                 // return events;
+                return Event.find({})
             },
         },
     },
@@ -100,7 +112,7 @@ const Mutation = new GraphQLObjectType({
     addClient: {
       type: ClientType,
       args: {
-        name: { type: GraphQLString },
+        name: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         let client = new Client({
@@ -109,6 +121,22 @@ const Mutation = new GraphQLObjectType({
         return client.save();
       },
     },
+    addEvent: {
+      type: EventType,
+      args: {
+        date: { type: new GraphQLNonNull(GraphQLString)},
+        type: { type: new GraphQLNonNull(GraphQLString)},
+        clientId: { type: GraphQLID}
+      },
+      resolve(parent, args) {
+        let event = new Event({
+          type: args.type,
+          date: args.date,
+          clientId: args.clientId
+        });
+        return event.save()
+      },
+    }
   },
 });
 
