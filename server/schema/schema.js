@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const _ = require("lodash");
 const Event = require("../models/event");
-const Client = require("../models/client");
+const Client = require("../models/user");
 
 // ToDo: - Convert String date type to GraphQLDate
 
