@@ -2,6 +2,17 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getAllEvents } from '@/Firebase/endpoints/events';
 import { UserContext } from '../UserProvider/UserContext';
+import { ApolloProvider } from 'react-apollo';
+
+import ApolloClient from 'apollo-boost'
+import { gql } from 'apollo-boost'
+import { graphql } from 'react-apollo'
+
+/// apollo client setup
+const client = new ApolloClient({
+  uri: 'http://localhost:4444/graphql'
+})
+
 
 export const EventContext = createContext({});
 export const EventProvider = ({ children }) => {
@@ -38,11 +49,26 @@ export const EventProvider = ({ children }) => {
       });
   }, []);
 
+
+  /// GraphQL Queries
+const getEventsQuery = gql`{
+  events {
+    type
+    date
+  }
+}
+`
+
+const test = getEventsQuery
+console.log(test);
+
   return (
+    <ApolloProvider client = { client }>
     <EventContext.Provider
       value={{ allEvents, setAllEvents, booking, setBooking, fullUser}}
     >
       {children}
     </EventContext.Provider>
+    </ApolloProvider>
   );
 };
