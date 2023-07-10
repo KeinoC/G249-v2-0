@@ -12,6 +12,7 @@ import {
 } from "../../../Firebase/firebase-config";
 import firebase from "firebase/app";
 import "firebase/auth";
+import GET_FULL_USERS_QUERY from './UserQueries'
 
 export const UserContext = createContext({
     user: undefined,

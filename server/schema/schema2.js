@@ -25,6 +25,7 @@ const UserType = new GraphQLObjectType({
     name: "User",
     fields: () => ({
         id: { type: GraphQLID },
+        role: { type: GraphQLString},
         username: { type: GraphQLString },
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString},
@@ -51,6 +52,8 @@ const EventType = new GraphQLObjectType({
         id: { type: GraphQLID },
         date: { type: GraphQLString },
         type: { type: GraphQLString },
+        status: { type: GraphQLString},
+        notes: { type: GraphQLString},
         userId: { type: GraphQLID },
         user: {
             type: UserType,

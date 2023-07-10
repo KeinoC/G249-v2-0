@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getAllEvents } from '@/Firebase/endpoints/events';
 import { UserContext } from '../UserProvider/UserContext';
 import { print } from 'graphql';
-// import { GET_EVENTS_QUERY } from "../AppProvider";
+import { GET_FULL_EVENTS_QUERY } from './EventQueries' 
 
 import { graphql } from 'react-apollo'
 
@@ -24,14 +24,6 @@ import { useQuery, gql } from "@apollo/client";
 
 
 
-const GET_EVENTS_QUERY = gql`{
-
-  events {
-    id
-    type
-}
-}
-`
 
 
 export const EventContext = createContext({});
@@ -50,7 +42,7 @@ export const EventProvider = ({ children }) => {
 
 
 
-const { error, loading, data } = useQuery(GET_EVENTS_QUERY);
+const { error, loading, data } = useQuery(GET_FULL_EVENTS_QUERY);
 
 useEffect(()=> {
   if (data) {
