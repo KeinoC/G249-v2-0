@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.13",
     "@mantine/core": "^6.0.13",

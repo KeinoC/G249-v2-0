@@ -1,9 +1,4 @@
 "use client";
-import { EventProvider } from "./EventProvider/EventContext";
-import { MiscProvider } from "./MiscProvider/MiscContext";
-import { UserProvider } from "./UserProvider/UserContext";
-import { MediaProvider } from "./MediaProvider/MediaContext";
-// import { ApolloProvider } from "react-apollo";
 import React, { useContext, useState } from "react";
 import NavBar from "../home/NavBar";
 // import { ApolloProvider, useQuery } from 'react-apollo';
@@ -17,7 +12,9 @@ import {
     from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql } from '@apollo/client'
+
+
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
@@ -41,26 +38,17 @@ const client = new ApolloClient({
     link: link,
 });
 
-export const GET_EVENTS_QUERY = gql`
-    {
-            events {
-                id
-                type
-            }
-    }
-`;
+export default function Dashboard() {
+    // console.log(graphql(GET_EVENTS_QUERY));
 
-export const AppProvider = ({ children }) => {
+    // const {} = useQuery(GET_EVENTS_QUERY)
 
     return (
         <ApolloProvider client={client}>
-            <MiscProvider>
-                <MediaProvider>
-                    <UserProvider>
-                        <EventProvider>{children}</EventProvider>
-                    </UserProvider>
-                </MediaProvider>
-            </MiscProvider>
+            <div>
+                <NavBar />
+                <h1>Testing</h1>
+            </div>
         </ApolloProvider>
     );
-};
+}

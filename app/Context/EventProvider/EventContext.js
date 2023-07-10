@@ -2,23 +2,43 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getAllEvents } from '@/Firebase/endpoints/events';
 import { UserContext } from '../UserProvider/UserContext';
-import { ApolloProvider } from 'react-apollo';
+import { print } from 'graphql';
+// import { GET_EVENTS_QUERY } from "../AppProvider";
 
-import ApolloClient from 'apollo-boost'
-import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+  from,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
+import { useQuery, gql } from "@apollo/client";
+
 /// apollo client setup
-const client = new ApolloClient({
-  uri: 'http://localhost:4444/graphql'
-})
+// const client = new ApolloClient({
+//   uri: 'http://localhost:4444/graphql'
+// })
+
+
+
+const GET_EVENTS_QUERY = gql`{
+
+  events {
+    id
+    type
+}
+}
+`
 
 
 export const EventContext = createContext({});
 export const EventProvider = ({ children }) => {
   const [allEvents, setAllEvents] = useState([]);
   const { fullUser } = useContext(UserContext);
-
+  
   const [booking, setBooking] = useState({
     eventHost: fullUser,
     eventDate: new Date(),
@@ -27,48 +47,22 @@ export const EventProvider = ({ children }) => {
     walkthroughDate: "",
   });
 
-  useEffect(() => {
-    const fetchAllEvents = async () => {
-      try {
-        const events = await getAllEvents();
-        setAllEvents(events);
-        return events;
-      } catch (error) {
-        console.error("Error retrieving events:", error);
-        throw error;
-      }
-    };
-
-    fetchAllEvents()
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-        return [];
-      })
-      .then((events) => {
-        console.log("Fetched events:", events);
-      });
-  }, []);
 
 
-  /// GraphQL Queries
-const getEventsQuery = gql`{
-  events {
-    type
-    date
+
+const { error, loading, data } = useQuery(GET_EVENTS_QUERY);
+
+useEffect(()=> {
+  if (data) {
+    setAllEvents(data.events);
   }
-}
-`
-
-const test = getEventsQuery
-console.log(test);
+}, [data])
 
   return (
-    <ApolloProvider client = { client }>
     <EventContext.Provider
       value={{ allEvents, setAllEvents, booking, setBooking, fullUser}}
     >
       {children}
     </EventContext.Provider>
-    </ApolloProvider>
   );
 };
