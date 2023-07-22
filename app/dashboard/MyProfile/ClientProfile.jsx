@@ -25,8 +25,8 @@ export default function ClientProfile() {
                 <div>
         <h2 className="font-bold text-lg">Personal Info</h2>
         <div className="info-container text-sm" >
-        <li><span className="font-bold">First Name: </span>{fullUser?.first_name}</li>
-        <li><span className="font-bold">Last Name: </span>{fullUser?.last_name}</li>
+        <li><span className="font-bold">First Name: </span>{fullUser?.firstName}</li>
+        <li><span className="font-bold">Last Name: </span>{fullUser?.lastName}</li>
         <li><span className="font-bold">Email: </span>{fullUser?.email}</li>
         <li><span className="font-bold">Address </span>{fullUser?.address}</li>
         </div>

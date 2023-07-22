@@ -36,7 +36,7 @@ const UserType = new GraphQLObjectType({
         address: { type: GraphQLString},
         profileImageUrl: { type: GraphQLString},
         profileImage: { type: GraphQLString},
-        joinedDate: { type: GraphQLString },
+        createdAt: { type: Date, default: Date.now },
         events: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {
@@ -114,12 +114,14 @@ const Mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 email: { type: new GraphQLNonNull(GraphQLString) },
-                userId : { type: GraphQLID },
+                userId : { type: new GraphQLNonNull(GraphQLID)  },
+                createdAt: { type: Date, default: Date.now },
             },
             resolve(parent, args) {
                 let user = new User({
                     userId: args.userId,
                     email: args.email,
+                    createdAt: args.createdAt
                 });
                 return user.save();
             },

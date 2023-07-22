@@ -15,7 +15,7 @@ export const GET_FULL_USERS_QUERY = gql`
             address
             profileImageUrl
             profileImage
-            joinedDate
+            createdAt
             events {
                 type
                 date

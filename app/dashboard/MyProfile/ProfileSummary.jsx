@@ -28,10 +28,10 @@ export default function ProfileSummary() {
             <div className="profile-detail-container w-3/4 flex flex-col mx-2 m-auto">
                 <div className="flex flex-col">
                     <span className="text-lg  justify-start">
-                        {fullUser?.first_name} {fullUser?.last_name}
+                        {fullUser?.firstName} {fullUser?.lastName}
                     </span>
                     <li className="text-sm list-none">
-                        Member since: {fullUser?.friend_since}
+                        Member Since: {fullUser?.memberSince}
                     </li>
                 </div>
             <div className=" text-sm alert-container flex flex-row ">

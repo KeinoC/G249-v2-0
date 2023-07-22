@@ -7,6 +7,7 @@ export default function ClientProfileForm() {
     const { user, setUser, updateUser, createUser, getUserById, fullUser } =
         useContext(UserContext);
     const [opened, { open, close }] = useDisclosure(false);
+    // const [currentTime, setCurrentTime] = useState(new Date().toString());
 
     // const refreshUser = async () => {
     //     if (user) {
@@ -22,16 +23,17 @@ export default function ClientProfileForm() {
 
     const [formData, setFormData] = useState({
         userId: user?.userId || "",
-        first_name: user?.first_name || "",
-        last_name: user?.last_name || "",
+        firsName: user?.firstName || "",
+        lastName: user?.lastName || "",
         email: user?.email || "",
         address: user?.address || "",
-        profile_img: user?.profile_img || "",
-        friend_since: user?.friend_since || "",
+        profileImg: user?.profileImg || "",
+        createdAt: user?.createdAt || "",
     });
 
     const handleChange = (e) => {
         e.preventDefault();
+        // setCurrentTime(new Date().toString());
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -44,17 +46,20 @@ export default function ClientProfileForm() {
         await updateUser(formData);
         // await createUser(formData);
         if (!user.userId) {
+            // setCurrentTime(new Date().toString());
             await createUser({
                 variables: {
                     "email": user?.email,
-                    "userId": user?.userId
+                    "userId": user?.userId,
+                    "createdAt": user?.createdAt,
                 }
             })
+            console.log("user created successfully");
         }
         close();
     };
 
-    console.log("user", user);
+    console.log(user);
 
     const personalInfo = (
         <>
@@ -68,17 +73,17 @@ export default function ClientProfileForm() {
                     <h2 className="font-bold text-lg">Personal Info</h2>
                     <TextInput
                         label="First Name"
-                        name="first_name"
-                        value={formData.first_name}
-                        placeholder={formData.first_name}
+                        name="firsName"
+                        value={formData.firstName}
+                        placeholder={formData.firstName}
                         onChange={handleChange}
                     />
                     <TextInput
                         label="Last Name"
-                        name="last_name"
-                        value={formData.last_name}
+                        name="lastName"
+                        value={formData.lastName}
                         onChange={handleChange}
-                        placeholder={formData.last_name}
+                        placeholder={formData.lastName}
                     />
                     <TextInput
                         label="EmailAddress"
@@ -89,10 +94,10 @@ export default function ClientProfileForm() {
                     />
                     <TextInput
                         label="Profile Image URL"
-                        name="profile_img"
-                        value={formData.profile_img}
+                        name="profileImg"
+                        value={formData.profileImg}
                         onChange={handleChange}
-                        placeholder={formData.profile_img}
+                        placeholder={formData.profileImg}
                     />
                     <TextInput
                         label="Address"

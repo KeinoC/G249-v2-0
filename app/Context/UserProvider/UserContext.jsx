@@ -81,11 +81,11 @@ export const UserProvider = ({ children }) => {
                 const user = {
                     userId: currentUser.uid,
                     email: currentUser.email || "",
-                    first_name: "",
-                    last_name: "",
+                    firstName: "",
+                    lastName: "",
                     address: "",
-                    profile_img: "",
-                    friend_since: "",
+                    profileImg: "",
+                    createdAt: "",
                 };
                 setUser(user);
                  // graphql mutation
@@ -102,11 +102,11 @@ export const UserProvider = ({ children }) => {
                 const authUser = {
                     email: user.email || "",
                     userId: user.uid,
-                    first_name: "",
-                    last_name: "",
+                    firstName: "",
+                    lastName: "",
                     address: "",
-                    profile_img: "",
-                    friend_since: "",
+                    profileImg: "",
+                    createdAt: "",
                 };
                 setUser(authUser);
                 setIsLoggedIn(true);
