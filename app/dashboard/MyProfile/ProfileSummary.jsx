@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useContext, useImperativeHandle, useState } from "react";
 import { EventContext } from "../../Context/EventProvider/EventContext";

@@ -12,6 +12,8 @@ import {
 } from "../../../Firebase/firebase-config";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER_MUTATION } from "./UserMutations";
 import GET_FULL_USERS_QUERY from './UserQueries'
 
 export const UserContext = createContext({
@@ -42,6 +44,8 @@ export const UserProvider = ({ children }) => {
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const [createUser, {data, loading, error}] = useMutation(CREATE_USER_MUTATION);
+
     const handleSignup = async () => {
         try {
             await app
@@ -67,6 +71,8 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+
+    // current user is the firebase authorized user
     const handleLogin = async () => {
         try {
             await app.auth().signInWithEmailAndPassword(email, password);
@@ -82,6 +88,7 @@ export const UserProvider = ({ children }) => {
                     friend_since: "",
                 };
                 setUser(user);
+                 // graphql mutation
             }
             window.location.href = "/dashboard";
         } catch (error) {
@@ -123,31 +130,31 @@ export const UserProvider = ({ children }) => {
         }
     };
 
-    const createUser = async (userData) => {
-        try {
-            const existingUserQuery = await db
-                .collection("users")
-                .where("email", "==", userData.email)
-                .get();
+    // const createUser = async (userData) => {
+    //     try {
+    //         const existingUserQuery = await db
+    //             .collection("users")
+    //             .where("email", "==", userData.email)
+    //             .get();
 
-            if (!existingUserQuery.empty) {
-                console.log("User with email already exists");
-                return "";
-            }
+    //         if (!existingUserQuery.empty) {
+    //             console.log("User with email already exists");
+    //             return "";
+    //         }
 
-            const docRef = db.collection("users").doc(userData.userId);
-            await docRef.set({
-                id: docRef.id,
-                email: userData.email,
-            });
+    //         const docRef = db.collection("users").doc(userData.userId);
+    //         await docRef.set({
+    //             id: docRef.id,
+    //             email: userData.email,
+    //         });
 
-            console.log("User created with ID:", docRef.id);
-            return docRef.id;
-        } catch (error) {
-            console.error("Error creating user:", error);
-            throw error;
-        }
-    };
+    //         console.log("User created with ID:", docRef.id);
+    //         return docRef.id;
+    //     } catch (error) {
+    //         console.error("Error creating user:", error);
+    //         throw error;
+    //     }
+    // };
 
     const updateUser = async (additionalData) => {
         const user = app.auth().currentUser;

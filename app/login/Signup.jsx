@@ -50,7 +50,7 @@ export default function Signup() {
                 />
                 <input
                 className="h-10 mx-20 my-5 flex p-5 rounded"
-                    type="password" 
+                    type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

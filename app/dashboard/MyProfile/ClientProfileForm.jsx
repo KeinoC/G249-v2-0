@@ -31,19 +31,30 @@ export default function ClientProfileForm() {
     });
 
     const handleChange = (e) => {
+        e.preventDefault();
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        createUser(formData);
-        updateUser(formData);
+    const handleSubmit = async (e) => {
+        await e.preventDefault();
         setUser(formData);
+        await updateUser(formData);
+        // await createUser(formData);
+        if (!user.userId) {
+            await createUser({
+                variables: {
+                    "email": user?.email,
+                    "userId": user?.userId
+                }
+            })
+        }
         close();
     };
+
+    console.log("user", user);
 
     const personalInfo = (
         <>
@@ -68,6 +79,13 @@ export default function ClientProfileForm() {
                         value={formData.last_name}
                         onChange={handleChange}
                         placeholder={formData.last_name}
+                    />
+                    <TextInput
+                        label="EmailAddress"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder={formData.email}
                     />
                     <TextInput
                         label="Profile Image URL"
