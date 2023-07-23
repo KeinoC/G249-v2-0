@@ -85,7 +85,7 @@ export const UserProvider = ({ children }) => {
                     lastName: "",
                     address: "",
                     profileImg: "",
-                    createdAt: "",
+                    createdAt: new Date().toString(),
                 };
                 setUser(user);
                  // graphql mutation
@@ -106,7 +106,7 @@ export const UserProvider = ({ children }) => {
                     lastName: "",
                     address: "",
                     profileImg: "",
-                    createdAt: "",
+                    createdAt: new Date().toString(),
                 };
                 setUser(authUser);
                 setIsLoggedIn(true);

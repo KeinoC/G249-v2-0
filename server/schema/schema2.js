@@ -18,6 +18,9 @@ const {
 } = require("graphql");
 
 
+// custom type
+
+
 
 // Types - User & Event
 
@@ -36,7 +39,7 @@ const UserType = new GraphQLObjectType({
         address: { type: GraphQLString},
         profileImageUrl: { type: GraphQLString},
         profileImage: { type: GraphQLString},
-        createdAt: { type: Date, default: Date.now },
+        createdAt: { type: GraphQLDate },
         events: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {
@@ -74,36 +77,31 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                // code to get data from db / other source
-                // return _.find(clients, { id: args.id });
-                return Event.findById(args.id);
+                return User.findById(args.id);
             },
         },
         getEventById: {
             type: EventType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                // code to get data from db / other source
-                // return _.find(events, { id: args.id });
-                return User.findById(args.id);
+                return Event.findById(args.id);
             },
         },
         getAllUsers: {
             type: new GraphQLList(UserType),
             resolve(parent, args) {
-                // return clients;
                 return User.find({});
             },
         },
         getAllEvents: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {
-                // return events;
                 return Event.find({});
             },
         },
     },
 });
+
 
 // Mutations
 
@@ -115,13 +113,13 @@ const Mutation = new GraphQLObjectType({
             args: {
                 email: { type: new GraphQLNonNull(GraphQLString) },
                 userId : { type: new GraphQLNonNull(GraphQLID)  },
-                createdAt: { type: Date, default: Date.now },
+                createdAt: { type: GraphQLDate },
             },
             resolve(parent, args) {
                 let user = new User({
                     userId: args.userId,
                     email: args.email,
-                    createdAt: args.createdAt
+                    createdAt: args.createdAt ? args.createdAt : new Date(),
                 });
                 return user.save();
             },

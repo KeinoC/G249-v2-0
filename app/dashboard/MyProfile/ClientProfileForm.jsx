@@ -23,12 +23,12 @@ export default function ClientProfileForm() {
 
     const [formData, setFormData] = useState({
         userId: user?.userId || "",
-        firsName: user?.firstName || "",
+        firstName: user?.firstName || "",
         lastName: user?.lastName || "",
         email: user?.email || "",
         address: user?.address || "",
         profileImg: user?.profileImg || "",
-        createdAt: user?.createdAt || "",
+        createdAt: user?.createdAt || new Date().toString(),
     });
 
     const handleChange = (e) => {
@@ -73,7 +73,7 @@ export default function ClientProfileForm() {
                     <h2 className="font-bold text-lg">Personal Info</h2>
                     <TextInput
                         label="First Name"
-                        name="firsName"
+                        name="firstName"
                         value={formData.firstName}
                         placeholder={formData.firstName}
                         onChange={handleChange}

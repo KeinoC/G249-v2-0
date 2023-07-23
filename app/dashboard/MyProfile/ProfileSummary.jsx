@@ -20,7 +20,7 @@ export default function ProfileSummary() {
             <div className="w-1/4 flex">
                 <img
                     className="object-cover rounded-full  m-auto shadow-3xl"
-                    src={fullUser?.profile_img}
+                    src={fullUser?.profileImg}
                     alt="profile pic"
                 />
             </div>
@@ -31,7 +31,7 @@ export default function ProfileSummary() {
                         {fullUser?.firstName} {fullUser?.lastName}
                     </span>
                     <li className="text-sm list-none">
-                        Member Since: {fullUser?.memberSince}
+                        Member Since: {fullUser?.createdAt?.slice(0, 10)}
                     </li>
                 </div>
             <div className=" text-sm alert-container flex flex-row ">
