@@ -1,9 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
-import {
-    getUserById,
-    deleteUserById,
-    updateUser,
-} from "@/Firebase/endpoints/users";
+import { useQuery } from "@apollo/react-hooks";
+import { getUserById, deleteUserById } from "@/Firebase/endpoints/users";
 import {
     app,
     db,
@@ -13,8 +10,10 @@ import {
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER_MUTATION } from "./UserMutations";
-import GET_FULL_USERS_QUERY from "./UserQueries";
+import { CREATE_USER_MUTATION } from "./UserMutations/create-user-mutation";
+import { UPDATE_USER_MUTATION } from "./UserMutations/update-user-mutation";
+import { useGetUserByUserId} from "./get-user-by-userid-query";
+import {GET_FULL_USERS_QUERY } from "./UserQueries";
 
 export const UserContext = createContext({
     user: undefined,
@@ -32,12 +31,12 @@ export const UserContext = createContext({
     facebookProvider: new firebase.auth.FacebookAuthProvider(),
     getUserById: async () => {},
     deleteUserById: async () => {},
-    updateUser: async () => {},
     createUser: async () => {},
     fullUser: undefined,
 });
 
 export const UserProvider = ({ children }) => {
+    const [loggedInUserId, setLoggedInUserId] = useState(undefined);
     const [user, setUser] = useState(undefined);
     const [fullUser, setFullUser] = useState(undefined);
     const [email, setEmail] = useState("");
@@ -47,30 +46,68 @@ export const UserProvider = ({ children }) => {
     const [createUser, { data, loading, error }] =
         useMutation(CREATE_USER_MUTATION);
 
+
     const handleSignup = async () => {
         try {
             const cred = await app
                 .auth()
-                .createUserWithEmailAndPassword(email, password)
-                if(cred.user) {
-                    await db.collection("users").doc(cred.user.uid).set({
-                        userId: cred.user.uid,
-                        email: email,
-                })
+                .createUserWithEmailAndPassword(email, password);
+            if (cred.user) {
+                await db.collection("users").doc(cred.user.uid).set({
+                    userId: cred.user.uid,
+                    email: email,
+                });
                 createUser({
-                            variables: {
-                                userId: cred.user.uid,
-                                email: cred.user.email,
-                                createdAt: new Date().toISOString(),
-                            },
-                        });
-                    }
+                    variables: {
+                        userId: cred.user.uid,
+                        email: cred.user.email,
+                        createdAt: new Date().toISOString(),
+                    },
+                });
+                setLoggedInUserId(cred.user.uid);
+            }
             window.location.href = "/dashboard";
         } catch (error) {
             console.log(error.message);
         }
     };
 
+    // get user by userId
+
+
+
+    // Update User Mutation Function
+
+    const [updateUserMutation] = useMutation(UPDATE_USER_MUTATION); // Use the UPDATE_USER_MUTATION
+    const [userToUpdate, setUserToUpdate] = useState({ id: loggedInUserId }); // Create a state variable to store the user to update
+
+    const updateUser = async (userToUpdate) => {
+        const user = app.auth().currentUser;
+
+
+        try {
+            const uid = user?.uid;
+
+            if (uid) {
+                await db.collection("users").doc(uid).update(userToUpdate);
+                console.log("User data updated successfully");
+
+                // If you want to update the local state with the updated data, you can do it here
+                // For example:
+                setUserToUpdate((prevUser) => ({
+                    ...prevUser,
+                    ...userToUpdate,
+                }));
+            } else {
+                throw new Error("User not found");
+            }
+        } catch (error) {
+            console.error("Error updating user data:", error);
+            throw error;
+        }
+    };
+
+    // Handle Social Signup
     const handleSocialSignup = async (provider) => {
         try {
             await app.auth().signInWithPopup(provider);
@@ -88,14 +125,9 @@ export const UserProvider = ({ children }) => {
             if (currentUser) {
                 const user = {
                     userId: currentUser.uid,
-                    email: currentUser.email || "",
-                    firstName: "",
-                    lastName: "",
-                    address: "",
-                    profileImg: "",
-                    createdAt: new Date().toString(),
                 };
                 setUser(user);
+                setUserToUpdate({ id: user?.userId });
                 // graphql mutation
             }
             window.location.href = "/dashboard";
@@ -163,24 +195,6 @@ export const UserProvider = ({ children }) => {
     //         throw error;
     //     }
     // };
-
-    const updateUser = async (additionalData) => {
-        const user = app.auth().currentUser;
-
-        try {
-            const uid = user?.uid;
-
-            if (uid) {
-                await db.collection("users").doc(uid).update(additionalData);
-                console.log("User data updated successfully");
-            } else {
-                throw new Error("User not found");
-            }
-        } catch (error) {
-            console.error("Error updating user data:", error);
-            throw error;
-        }
-    };
 
     const getAllUsers = async () => {
         try {
@@ -254,6 +268,8 @@ export const UserProvider = ({ children }) => {
                 googleProvider,
                 facebookProvider,
                 updateUser,
+                userToUpdate,
+                setUserToUpdate,
                 getUserById,
                 deleteUserById,
                 isLoggedIn,

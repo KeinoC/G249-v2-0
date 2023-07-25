@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const _ = require("lodash");
-const Event = require("../models/event");
-const User = require("../models/user");
+const Event = require("../models/event.mongo.schema");
+const User = require("../models/user.mongo.schema");
 
 // ToDo: - Convert String date type to GraphQLDate
 
@@ -55,6 +55,7 @@ const UserType = new GraphQLObjectType({
         profileImageUrl: { type: GraphQLString},
         profileImage: { type: GraphQLString},
         createdAt: { type: GraphQLDate },
+        role: { type: GraphQLString },
         events: {
             type: new GraphQLList(EventType),
             resolve(parent, args) {

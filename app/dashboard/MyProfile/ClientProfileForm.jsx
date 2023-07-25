@@ -4,7 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { UserContext, User } from "../../Context/UserProvider/UserContext";
 
 export default function ClientProfileForm() {
-    const { user, setUser, updateUser, createUser, getUserById, fullUser } =
+    const { user, setUser, updateUser, createUser, userToUpdate, setUserToUpdate, getUserById, fullUser } =
         useContext(UserContext);
     const [opened, { open, close }] = useDisclosure(false);
     // const [currentTime, setCurrentTime] = useState(new Date().toString());
@@ -31,35 +31,28 @@ export default function ClientProfileForm() {
         createdAt: user?.createdAt || new Date().toString(),
     });
 
+    console.log(user)
+
     const handleChange = (e) => {
         e.preventDefault();
         // setCurrentTime(new Date().toString());
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
+        })
+        setUserToUpdate({
+            ...userToUpdate, [e.target.name]: e.target.value,
         });
     };
 
     const handleSubmit = async (e) => {
         await e.preventDefault();
-        setUser(formData);
-        await updateUser(formData);
-        // await createUser(formData);
-        if (!user.userId) {
-            // setCurrentTime(new Date().toString());
-            await createUser({
-                variables: {
-                    "email": user?.email,
-                    "userId": user?.userId,
-                    "createdAt": user?.createdAt,
-                }
-            })
-            console.log("user created successfully");
-        }
+        setUser(userToUpdate);
+        await updateUser(userToUpdate);
         close();
     };
 
-    console.log(user);
+    console.log(userToUpdate);
 
     const personalInfo = (
         <>
