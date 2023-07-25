@@ -14,7 +14,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER_MUTATION } from "./UserMutations";
-import GET_FULL_USERS_QUERY from './UserQueries'
+import GET_FULL_USERS_QUERY from "./UserQueries";
 
 export const UserContext = createContext({
     user: undefined,
@@ -44,18 +44,27 @@ export const UserProvider = ({ children }) => {
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const [createUser, {data, loading, error}] = useMutation(CREATE_USER_MUTATION);
+    const [createUser, { data, loading, error }] =
+        useMutation(CREATE_USER_MUTATION);
 
     const handleSignup = async () => {
         try {
-            await app
+            const cred = await app
                 .auth()
                 .createUserWithEmailAndPassword(email, password)
-                .then((cred) => {
-                    return db.collection("users").doc(cred.user?.uid).set({
+                if(cred.user) {
+                    await db.collection("users").doc(cred.user.uid).set({
+                        userId: cred.user.uid,
                         email: email,
-                    });
-                });
+                })
+                createUser({
+                            variables: {
+                                userId: cred.user.uid,
+                                email: cred.user.email,
+                                createdAt: new Date().toISOString(),
+                            },
+                        });
+                    }
             window.location.href = "/dashboard";
         } catch (error) {
             console.log(error.message);
@@ -70,7 +79,6 @@ export const UserProvider = ({ children }) => {
             console.log(error.message);
         }
     };
-
 
     // current user is the firebase authorized user
     const handleLogin = async () => {
@@ -88,7 +96,7 @@ export const UserProvider = ({ children }) => {
                     createdAt: new Date().toString(),
                 };
                 setUser(user);
-                 // graphql mutation
+                // graphql mutation
             }
             window.location.href = "/dashboard";
         } catch (error) {

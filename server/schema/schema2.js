@@ -12,15 +12,30 @@ const {
     GraphQLSchema,
     GraphQLID,
     GraphQLInt,
-    GraphQLDate,
     GraphQLList,
     GraphQLNonNull,
+    GraphQLScalarType,
 } = require("graphql");
 
 
 // custom type
 
-
+const GraphQLDate = new GraphQLScalarType({
+    name: "GraphQLDate",
+    description: "Date custom scalar type",
+    parseValue(value) {
+        return new Date(value);
+    },
+    serialize(value) {
+        return value.toISOString();
+    },
+    parseLiteral(ast) {
+        if (ast.kind === Kind.STRING) {
+            return new Date(ast.value);
+        }
+        return null;
+    },
+});
 
 // Types - User & Event
 
@@ -117,9 +132,9 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 let user = new User({
-                    userId: args.userId,
-                    email: args.email,
-                    createdAt: args.createdAt ? args.createdAt : new Date(),
+                    userId: args?.userId,
+                    email: args?.email,
+                    createdAt: args?.createdAt,
                 });
                 return user.save();
             },
@@ -144,4 +159,4 @@ const Mutation = new GraphQLObjectType({
 });
 
 
-module.exports = new GraphQLSchema({ query: RootQuery, mutation: Mutation });
+module.exports = new GraphQLSchema({ query: RootQuery, mutation: Mutation, types: [GraphQLDate] });

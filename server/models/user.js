@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({
     uid: String,
+    userId: String,
     username: String,
     email: String,
+    createdAt: Date,
+    Role: String,
 })
 
 
